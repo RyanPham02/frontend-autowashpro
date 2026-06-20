@@ -3,7 +3,7 @@ import { Link, Outlet } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { useTranslation } from 'react-i18next';
-import { LogIn, LogOut, User, Sun, Moon, Globe, Zap, Menu, X, MessageCircle, Send, Bell } from 'lucide-react';
+import { LogIn, LogOut, User, Sun, Moon, Globe, Zap, Menu, X, MessageCircle, Send, Bell, Home, Calendar, Wallet } from 'lucide-react';
 import './UserLayout.css';
 
 const UserLayout = () => {
@@ -269,6 +269,26 @@ const UserLayout = () => {
           {isChatOpen ? <X size={24} /> : <MessageCircle size={24} />}
         </button>
       </div>
+
+      {/* Mobile Bottom Navigation */}
+      <nav className="bottom-nav">
+        <Link to="/" className="bottom-nav-item">
+          <Home size={20} />
+          <span>Trang chủ</span>
+        </Link>
+        <Link to="/user" className="bottom-nav-item" onClick={() => localStorage.setItem('autoWashActiveTab', 'bookings')}>
+          <Calendar size={20} />
+          <span>Lịch hẹn</span>
+        </Link>
+        <Link to="/user" className="bottom-nav-item" onClick={() => localStorage.setItem('autoWashActiveTab', 'wallet')}>
+          <Wallet size={20} />
+          <span>Ví Tiền</span>
+        </Link>
+        <Link to="/user" className="bottom-nav-item" onClick={() => localStorage.setItem('autoWashActiveTab', 'overview')}>
+          <User size={20} />
+          <span>Cá nhân</span>
+        </Link>
+      </nav>
 
     </div>
   );

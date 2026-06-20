@@ -328,3 +328,50 @@
 .notif-dot.success { background: var(--emerald); box-shadow: 0 0 8px var(--emerald); }
 .notif-dot.warning { background: var(--amber); box-shadow: 0 0 8px var(--amber); }
 
+/* Mobile Bottom Navigation */
+.bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--surface-2);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border-color);
+  padding: 0.5rem 1rem;
+  z-index: 100;
+  justify-content: space-between;
+  padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
+}
+
+.bottom-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.75rem;
+  font-weight: 500;
+  transition: all var(--transition-fast);
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+}
+
+.bottom-nav-item.active, .bottom-nav-item:hover {
+  color: var(--primary);
+  background: rgba(99, 102, 241, 0.1);
+}
+
+@media (max-width: 768px) {
+  .bottom-nav {
+    display: flex;
+  }
+  .user-footer {
+    margin-bottom: 70px; /* Space for bottom nav */
+  }
+  .floating-chat-container {
+    bottom: calc(5rem + env(safe-area-inset-bottom));
+  }
+}
