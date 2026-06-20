@@ -5,7 +5,7 @@ import './Topbar.css';
 
 const Topbar = ({ toggleMenu }) => {
   const { theme, toggleTheme } = useTheme();
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const toggleLanguage = () => {
     const newLang = i18n.language === 'vi' ? 'en' : 'vi';
