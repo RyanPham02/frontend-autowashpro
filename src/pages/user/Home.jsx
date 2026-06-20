@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { servicesData } from '../../mocks/servicesData';
 import { useAuth } from '../../context/AuthContext';
-import { Clock, Star, ArrowRight, Shield, Zap, Rocket, Users, Target, Layers, Trophy, X, DollarSign, CheckCircle } from 'lucide-react';
+import { Clock, Star, ArrowRight, Rocket, Users, Target, Layers, Trophy, X, DollarSign, CheckCircle } from 'lucide-react';
 import './Home.css';
 
 const Home = () => {

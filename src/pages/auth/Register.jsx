@@ -7,10 +7,13 @@ import './Auth.css';
 
 const Register = () => {
   const { t } = useTranslation();
+  const location = useLocation();
+  const fromBooking = location.state?.fromBooking || false;
+
   const [formData, setFormData] = useState({
-    name: '',
+    name: location.state?.name || '',
     email: '',
-    phone: '',
+    phone: location.state?.phone || '',
     password: '',
     confirmPassword: ''
   });
@@ -19,7 +22,6 @@ const Register = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
 
   // Nếu đã đăng nhập, tự động chuyển về Dashboard
   const { user, login } = useAuth();
@@ -29,17 +31,9 @@ const Register = () => {
     }
   }, [user, navigate]);
 
-  const fromBooking = location.state?.fromBooking || false;
 
-  useEffect(() => {
-    if (location.state) {
-      setFormData(prev => ({
-        ...prev,
-        name: location.state.name || prev.name,
-        phone: location.state.phone || prev.phone
-      }));
-    }
-  }, [location.state]);
+
+  // Đã gộp location.state vào khởi tạo useState để tránh side-effect render
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

@@ -1,13 +1,11 @@
 import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
-import { useTranslation } from 'react-i18next';
 import { bookingsData } from '../../mocks/bookingsData';
 import { Calendar, Clock, MapPin, Award, History, Car, Plus, Trash2 } from 'lucide-react';
 import './UserDashboard.css';
 
 const UserDashboard = () => {
   const { user } = useAuth();
-  const { t } = useTranslation();
 
   // Mock data garage
   const [garage, setGarage] = useState([

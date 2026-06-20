@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { DollarSign, Droplets, Users, TrendingUp, Calendar, Activity, Clock } from 'lucide-react';
+import { DollarSign, Droplets, Users, TrendingUp } from 'lucide-react';
 import { bookingsData } from '../mocks/bookingsData';
 import './Dashboard.css';
 
