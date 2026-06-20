@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext';
-import { Search, MapPin, CreditCard, Shield, Clock, Users, ArrowRight, X, ChevronRight, CheckCircle, Ticket, Wallet, Calendar, Plus, User, Star, Trophy, Target, Layers, Map, Rocket, DollarSign, Tag } from 'lucide-react';
+import { MapPin, Clock, Users, ArrowRight, X, CheckCircle, Star, Trophy, Target, Layers, Map, Rocket, DollarSign, Tag } from 'lucide-react';
 import { servicesData } from '../../mocks/servicesData';
 import './Home.css';
 

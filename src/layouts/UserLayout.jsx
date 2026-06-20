@@ -14,6 +14,11 @@ const UserLayout = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
 
+  const [chatMessages, setChatMessages] = useState([
+    { sender: 'bot', text: 'Xin chào! AutoWash Pro có thể giúp gì cho bạn?' }
+  ]);
+  const [chatInput, setChatInput] = useState('');
+
   const unreadCount = notifications ? notifications.filter(n => !n.isRead).length : 0;
 
   const toggleLanguage = () => {
@@ -23,6 +28,27 @@ const UserLayout = () => {
   };
 
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
+
+  const handleSendChat = (text = chatInput) => {
+    if (!text.trim()) return;
+    
+    // Add user message
+    setChatMessages(prev => [...prev, { sender: 'user', text }]);
+    setChatInput('');
+
+    // Simulate bot reply
+    setTimeout(() => {
+      let reply = 'Cảm ơn bạn đã liên hệ. Nhân viên CSKH sẽ phản hồi trong giây lát.';
+      if (text.toLowerCase().includes('báo giá') || text.toLowerCase().includes('giá')) {
+        reply = 'Dịch vụ Rửa xe Tiêu chuẩn có giá 150K, Cao cấp là 300K nhé bạn! Bạn xem chi tiết ở Trang Chủ nhé.';
+      } else if (text.toLowerCase().includes('nạp tiền') || text.toLowerCase().includes('thanh toán')) {
+        reply = 'Bạn có thể nạp tiền ở mục "Ví AutoWash Pay" trong tài khoản của bạn thông qua VNPay nha.';
+      } else if (text.toLowerCase().includes('điểm') || text.toLowerCase().includes('thưởng')) {
+        reply = 'Bạn sẽ nhận được 50 điểm khi Điểm danh mỗi ngày, hoặc khi Đánh giá dịch vụ nhé!';
+      }
+      setChatMessages(prev => [...prev, { sender: 'bot', text: reply }]);
+    }, 1000);
+  };
 
   return (
     <div className="user-layout">
@@ -200,14 +226,37 @@ const UserLayout = () => {
               </div>
               <button className="icon-btn" onClick={() => setIsChatOpen(false)}><X size={18} /></button>
             </div>
-            <div className="chat-body">
-              <div className="chat-message bot">
-                Xin chào! AutoWash Pro có thể giúp gì cho bạn?
-              </div>
+            <div className="chat-body" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', flex: 1, padding: '1rem', overflowY: 'auto' }}>
+              {chatMessages.map((msg, idx) => (
+                <div key={idx} className={`chat-message ${msg.sender}`}>
+                  {msg.text}
+                </div>
+              ))}
+              
+              {/* Quick Options */}
+              {chatMessages.length < 3 && (
+                <div className="d-flex flex-wrap gap-2 mt-2">
+                  <button className="badge" style={{background: 'var(--surface-2)', color: 'var(--text-main)', border: '1px solid var(--border-color)', cursor: 'pointer', padding: '6px 10px'}} onClick={() => handleSendChat('Cho tôi xin báo giá')}>Báo giá dịch vụ</button>
+                  <button className="badge" style={{background: 'var(--surface-2)', color: 'var(--text-main)', border: '1px solid var(--border-color)', cursor: 'pointer', padding: '6px 10px'}} onClick={() => handleSendChat('Hướng dẫn nạp tiền')}>Hướng dẫn nạp tiền</button>
+                  <button className="badge" style={{background: 'var(--surface-2)', color: 'var(--text-main)', border: '1px solid var(--border-color)', cursor: 'pointer', padding: '6px 10px'}} onClick={() => handleSendChat('Cách nhận điểm thưởng')}>Cách kiếm điểm</button>
+                </div>
+              )}
             </div>
             <div className="chat-footer d-flex gap-2">
-              <input type="text" className="form-input flex-fill" placeholder="Nhập tin nhắn..." style={{minHeight: '40px', padding: '0.5rem'}} />
-              <button className="btn btn-primary d-flex align-items-center justify-content-center" style={{padding: '0 1rem'}}>
+              <input 
+                type="text" 
+                className="form-input flex-fill" 
+                placeholder="Nhập tin nhắn..." 
+                style={{minHeight: '40px', padding: '0.5rem'}} 
+                value={chatInput}
+                onChange={e => setChatInput(e.target.value)}
+                onKeyPress={e => e.key === 'Enter' && handleSendChat()}
+              />
+              <button 
+                className="btn btn-primary d-flex align-items-center justify-content-center" 
+                style={{padding: '0 1rem'}}
+                onClick={() => handleSendChat()}
+              >
                 <Send size={16} />
               </button>
             </div>

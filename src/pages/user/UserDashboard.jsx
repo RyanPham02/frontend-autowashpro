@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
-import { Calendar, Clock, MapPin, Award, History, Car, Plus, Trash2, Wallet, Tag, CheckCircle, CreditCard, X, ChevronRight, Video, Star, Gift, AlertTriangle, PenTool } from 'lucide-react';
+import { Calendar, Clock, MapPin, Award, History, Car, Plus, Trash2, Wallet, Tag, CheckCircle, CreditCard, X, ChevronRight, Video, Star, Gift, AlertTriangle, PenTool, UploadCloud, Download, Image as ImageIcon, Crown } from 'lucide-react';
 import './UserDashboard.css';
 
 const UserDashboard = () => {
@@ -55,6 +55,26 @@ const UserDashboard = () => {
     } else {
       alert('Bạn không đủ điểm để quay (Cần 500 điểm)');
     }
+  };
+
+  const handleExportCSV = (type) => {
+    const data = type === 'bookings' ? myBookings : []; // Mock data export
+    let csvContent = "data:text/csv;charset=utf-8,";
+    if (type === 'bookings') {
+      csvContent += "ID,Service,Date,Time,Vehicle,Price,Status\n";
+      data.forEach(b => {
+        csvContent += `${b.id},${b.service},${b.date},${b.time},${b.vehicle},${b.price},${b.status}\n`;
+      });
+    } else {
+      csvContent += "Transaction ID,Amount,Type,Date\nTXN1234,500000,Deposit,20/06/2026\n";
+    }
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `autowash_${type}_export.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const removeCar = (id) => {
@@ -176,6 +196,33 @@ const UserDashboard = () => {
                       {spinResult && <div className="mt-2 fw-bold" style={{color: spinResult.includes('Trượt') ? 'var(--text-muted)' : 'var(--emerald)'}}>{spinResult}</div>}
                     </div>
                   </div>
+
+                  <div className="mt-4 p-3 rounded" style={{border: '1px solid var(--border-color)', background: 'var(--surface-2)'}}>
+                    <h4 className="m-0 mb-3 d-flex align-items-center gap-2" style={{fontSize: '1.1rem'}}><Crown size={18} color="var(--amber)"/> VIP Leaderboard</h4>
+                    <div className="d-flex flex-column gap-2">
+                      <div className="d-flex justify-content-between align-items-center p-2 rounded" style={{background: 'rgba(245, 158, 11, 0.1)', border: '1px solid var(--amber)'}}>
+                        <div className="d-flex align-items-center gap-2">
+                          <span style={{fontWeight: 'bold', color: 'var(--amber)'}}>#1</span>
+                          <span>Nguyễn Văn A</span>
+                        </div>
+                        <span style={{fontWeight: 'bold'}}>15.200 pts</span>
+                      </div>
+                      <div className="d-flex justify-content-between align-items-center p-2 rounded" style={{background: 'var(--surface)'}}>
+                        <div className="d-flex align-items-center gap-2">
+                          <span style={{fontWeight: 'bold', color: 'var(--text-muted)'}}>#2</span>
+                          <span>Trần Thị B</span>
+                        </div>
+                        <span style={{fontWeight: 'bold'}}>12.400 pts</span>
+                      </div>
+                      <div className="d-flex justify-content-between align-items-center p-2 rounded" style={{background: 'var(--surface)'}}>
+                        <div className="d-flex align-items-center gap-2">
+                          <span style={{fontWeight: 'bold', color: 'var(--text-muted)'}}>#3</span>
+                          <span>{user?.name} (Bạn)</span>
+                        </div>
+                        <span style={{fontWeight: 'bold'}}>{user?.points || 2500} pts</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               
@@ -248,9 +295,14 @@ const UserDashboard = () => {
           {/* TAB: BOOKINGS & TRACKING */}
           {activeTab === 'bookings' && (
             <div className="glass-card">
-              <h3 className="d-flex align-items-center gap-2 mb-4" style={{fontSize: '1.3rem', fontFamily: 'var(--font-display)'}}>
-                <History size={20} /> Tiến độ dịch vụ & Lịch hẹn
-              </h3>
+              <div className="d-flex justify-content-between align-items-center mb-4">
+                <h3 className="d-flex align-items-center gap-2 m-0" style={{fontSize: '1.3rem', fontFamily: 'var(--font-display)'}}>
+                  <History size={20} /> Tiến độ dịch vụ & Lịch hẹn
+                </h3>
+                <button className="btn btn-secondary d-flex align-items-center gap-2" onClick={() => handleExportCSV('bookings')} style={{fontSize: '0.85rem'}}>
+                  <Download size={16} /> Xuất CSV
+                </button>
+              </div>
               
               <div className="booking-list d-flex flex-column gap-4">
                 {myBookings.map((booking) => (
@@ -276,6 +328,28 @@ const UserDashboard = () => {
                     
                     {/* Stepper Tracking */}
                     {renderStepper(booking.trackingStep || 1)}
+
+                    {/* Cloud Image Upload / Gallery */}
+                    {booking.trackingStep >= 2 && (
+                      <div className="mt-3 p-3 rounded" style={{background: 'rgba(0,0,0,0.2)', border: '1px dashed var(--border-color)'}}>
+                        <h5 className="m-0 mb-2 d-flex align-items-center gap-2" style={{fontSize: '0.9rem'}}><ImageIcon size={16}/> Báo cáo tình trạng xe (Cloud)</h5>
+                        <div className="d-flex flex-wrap gap-2">
+                          <div className="d-flex align-items-center justify-content-center rounded" style={{width: 80, height: 60, background: 'var(--surface)', border: '1px solid var(--border-color)', fontSize: '0.75rem', color: 'var(--text-muted)'}}>
+                            Before 1
+                          </div>
+                          {booking.trackingStep >= 3 && (
+                            <div className="d-flex align-items-center justify-content-center rounded" style={{width: 80, height: 60, background: 'var(--surface)', border: '1px solid var(--emerald)', fontSize: '0.75rem', color: 'var(--emerald)'}}>
+                              After 1
+                            </div>
+                          )}
+                          {booking.trackingStep === 2 && (
+                            <button className="btn p-0 d-flex align-items-center justify-content-center rounded" style={{width: 80, height: 60, background: 'rgba(99, 102, 241, 0.1)', border: '1px dashed var(--primary)', color: 'var(--primary)', cursor: 'pointer'}}>
+                              <UploadCloud size={20} />
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    )}
                     
                     {/* Action Buttons based on status */}
                     <div className="mt-4 pt-3 d-flex justify-content-end gap-2" style={{borderTop: '1px dashed var(--border-color)'}}>
@@ -311,9 +385,14 @@ const UserDashboard = () => {
                 <h3 className="d-flex align-items-center gap-2 m-0" style={{fontSize: '1.3rem', fontFamily: 'var(--font-display)'}}>
                   <Wallet size={20} /> Ví AutoWash Pay
                 </h3>
-                <button className="btn btn-primary d-flex align-items-center gap-2" onClick={() => setShowDepositModal(true)}>
-                  <Plus size={16} /> Nạp tiền
-                </button>
+                <div className="d-flex gap-2">
+                  <button className="btn btn-secondary d-flex align-items-center gap-2" onClick={() => handleExportCSV('wallet')} style={{fontSize: '0.85rem'}}>
+                    <Download size={16} /> Xuất CSV
+                  </button>
+                  <button className="btn btn-primary d-flex align-items-center gap-2" onClick={() => setShowDepositModal(true)}>
+                    <Plus size={16} /> Nạp tiền
+                  </button>
+                </div>
               </div>
 
               <div className="wallet-card-wrapper mb-4">
