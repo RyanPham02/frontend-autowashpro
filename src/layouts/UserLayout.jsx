@@ -37,7 +37,6 @@ const UserLayout = () => {
           <nav className="user-nav d-none d-md-flex">
             <Link to="/">{t('header.home')}</Link>
             <a href="#services">{t('header.services')}</a>
-            <a href="#booking">{t('home.bookNow')}</a>
           </nav>
           
           <div className="user-actions">
@@ -51,7 +50,7 @@ const UserLayout = () => {
               
               {user ? (
                 <>
-                  <Link to="/user" className="d-none d-md-flex align-items-center gap-2 text-muted" style={{textDecoration: 'none'}}>
+                  <Link to="/user" className="btn btn-outline-primary d-none d-md-flex align-items-center gap-2" style={{ padding: '0.5rem 1rem' }}>
                     <User size={18} /> {t('header.hello', { name: user.name })}
                   </Link>
                   <button onClick={logout} className="btn btn-secondary d-none d-md-flex align-items-center" style={{ padding: '0.5rem 1rem' }}>
@@ -91,7 +90,6 @@ const UserLayout = () => {
             <div className="container d-flex flex-column gap-3 py-3">
               <Link to="/" onClick={closeMobileMenu}>{t('header.home')}</Link>
               <a href="#services" onClick={closeMobileMenu}>{t('header.services')}</a>
-              <a href="#booking" onClick={closeMobileMenu}>{t('home.bookNow')}</a>
               
               <div className="divider"></div>
               

@@ -3,15 +3,19 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { servicesData } from '../../mocks/servicesData';
-import { Clock, Star, ArrowRight, Shield, Rocket, Users, Target, Layers, Trophy, X, DollarSign } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
+import { Clock, Star, ArrowRight, Shield, Zap, Rocket, Users, Target, Layers, Trophy, X, DollarSign, CheckCircle } from 'lucide-react';
 import './Home.css';
 
 const Home = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { user } = useAuth();
   
   const [activeTab, setActiveTab] = useState('all');
   const [selectedService, setSelectedService] = useState(null);
+  const [showBookingForm, setShowBookingForm] = useState(false);
+  const [bookingSuccess, setBookingSuccess] = useState(false);
 
   const tabs = [
     { id: 'all', label: 'Tất cả' },
@@ -198,7 +202,7 @@ const Home = () => {
               <button 
                 className="icon-btn position-absolute" 
                 style={{ top: '1rem', right: '1rem', background: 'rgba(255,255,255,0.1)', borderRadius: '50%', padding: '0.5rem', color: 'var(--text-color)' }}
-                onClick={() => setSelectedService(null)}
+                onClick={() => { setSelectedService(null); setShowBookingForm(false); setBookingSuccess(false); }}
               >
                 <X size={20} />
               </button>
@@ -229,13 +233,49 @@ const Home = () => {
                 </div>
               </div>
 
-              <button 
-                className="btn btn-primary w-100 d-flex justify-content-center align-items-center gap-2 py-3"
-                style={{fontSize: '1.1rem', fontWeight: 600, letterSpacing: '0.5px'}}
-                onClick={() => navigate('/register')}
-              >
-                Book This Service <ArrowRight size={20} />
-              </button>
+              {!showBookingForm ? (
+                <button 
+                  className="btn btn-primary w-100 d-flex justify-content-center align-items-center gap-2 py-3"
+                  style={{fontSize: '1.1rem', fontWeight: 600, letterSpacing: '0.5px'}}
+                  onClick={() => {
+                    if (user) {
+                      setShowBookingForm(true);
+                    } else {
+                      navigate('/register', { state: { fromBooking: true } });
+                    }
+                  }}
+                >
+                  Book This Service <ArrowRight size={20} />
+                </button>
+              ) : (
+                <div style={{background: 'var(--bg-color)', padding: '1.5rem', borderRadius: '12px', border: '1px solid var(--border-color)'}}>
+                  <h4 className="mb-3" style={{color: 'var(--text-color)'}}>Xác nhận đặt lịch</h4>
+                  {bookingSuccess ? (
+                    <div className="text-center py-3" style={{color: '#10b981'}}>
+                      <CheckCircle size={40} className="mb-2" />
+                      <p className="m-0" style={{fontSize: '1.1rem'}}>Đặt lịch thành công! Đang chuyển hướng...</p>
+                    </div>
+                  ) : (
+                    <>
+                      <input type="date" className="form-control mb-3" style={{background: 'var(--card-bg)', color: 'var(--text-color)', border: '1px solid var(--border-color)'}} required />
+                      <input type="time" className="form-control mb-3" style={{background: 'var(--card-bg)', color: 'var(--text-color)', border: '1px solid var(--border-color)'}} required />
+                      <button 
+                        className="btn btn-primary w-100" 
+                        style={{padding: '0.8rem', fontSize: '1.1rem'}}
+                        onClick={() => {
+                          setBookingSuccess(true);
+                          setTimeout(() => {
+                            setSelectedService(null);
+                            setShowBookingForm(false);
+                            setBookingSuccess(false);
+                            navigate('/user');
+                          }, 1500);
+                        }}
+                      >Xác nhận ngay</button>
+                    </>
+                  )}
+                </div>
+              )}
             </motion.div>
           </div>
         )}
