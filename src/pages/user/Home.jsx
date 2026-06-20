@@ -32,147 +32,145 @@ const Home = () => {
   return (
     <div className="home-container">
       {/* Background Decorative Elements */}
-      <div className="bg-blob-1"></div>
-      <div className="bg-blob-2"></div>
+      <div className="bgBlob1"></div>
+      <div className="bgBlob2"></div>
 
       {/* Main Content */}
       <main className="main-content">
         
         {/* Hero Section */}
         <section className="hero-section">
-          <div className="hero-content">
-            <motion.div
-              initial={{ x: -30, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="hero-text"
-            >
-              <div className="hero-tag">
-                <Rocket size={16} />
-                <span>{t('home.badge')}</span>
-              </div>
-              <h1 className="hero-title">
-                {t('home.title')} <br />
-                <span className="gradient-text">{t('home.titleHighlight')}</span>
-              </h1>
-              <p className="hero-desc">
-                {t('home.description')}
-              </p>
-              <div className="hero-buttons">
-                <a href="#services" className="btn btn-primary btn-lg d-flex align-items-center gap-2">
-                  {t('home.explore')} <ArrowRight size={18} />
-                </a>
-              </div>
-            </motion.div>
+          <motion.div
+            initial={{ y: 30, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="d-flex flex-column align-items-center"
+          >
+            <div className="heroTag">
+              <Rocket size={16} />
+              <span>{t('home.badge', 'Premium Quality Care')}</span>
+            </div>
+            <h1 className="heroTitle">
+              {t('home.title', 'Explore & Book')} <br/>
+              <span className="gradient-text">{t('home.titleHighlight', 'World-Class Detailing')}</span>
+            </h1>
+            <p className="heroDesc">
+              {t('home.description', 'Connect with top talent, showcase your skills, and build outstanding software solutions in globally recognized Hackathon competitions.')}
+            </p>
+          </motion.div>
 
-            <motion.div
-              initial={{ x: 30, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="hero-stats"
-            >
-              <div className="stat-card-glow glass-card d-flex flex-column align-items-center text-center">
-                <h3 className="gradient-text" style={{fontSize: '2.5rem', marginBottom: '0.5rem', fontWeight: 800}}>10k+</h3>
-                <p style={{color: 'var(--text-muted)'}}>{t('home.stats.customers')}</p>
+          <motion.div
+            initial={{ y: 30, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="stats-container grid-2 mt-4"
+          >
+            <div className="stat-card-premium">
+              <div className="stat-value">10k+</div>
+              <div className="stat-label">{t('home.stats.customers', 'Khách hàng hài lòng')}</div>
+            </div>
+            <div className="stat-card-premium">
+              <div className="stat-value d-flex align-items-center justify-content-center gap-2">
+                4.9 <Star size={28} fill="var(--amber)" color="var(--amber)" />
               </div>
-              <div className="stat-card-glow glass-card d-flex flex-column align-items-center text-center">
-                <h3 style={{fontSize: '2.5rem', marginBottom: '0.5rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
-                  4.9 <Star size={24} fill="#f59e0b" color="#f59e0b" />
-                </h3>
-                <p style={{color: 'var(--text-muted)'}}>{t('home.stats.rating')}</p>
-              </div>
-            </motion.div>
-          </div>
+              <div className="stat-label">{t('home.stats.rating', 'Đánh giá trung bình')}</div>
+            </div>
+          </motion.div>
         </section>
 
         {/* Competitions / Services Section */}
-        <section className="services-section w-100" id="services" style={{paddingTop: '2rem'}}>
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="d-flex flex-column align-items-center mb-5"
-          >
-            <h2 className="section-title text-center mb-4">
-              <Star style={{ color: "var(--primary-hover)" }} />
-              {t('home.servicesTitle')}
-            </h2>
+        <section className="services-section w-100" id="services" style={{paddingTop: '2rem', maxWidth: '1100px', margin: '0 auto'}}>
+          <div className="d-flex flex-column align-items-center justify-content-between mb-4 w-100" style={{flexDirection: 'row', gap: '1rem', flexWrap: 'wrap'}}>
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <h2 className="section-title m-0">
+                <Star style={{ color: "var(--primary-hover)" }} />
+                {t('home.servicesTitle', 'Featured Services')}
+              </h2>
+            </motion.div>
             
             {/* Tabs */}
-            <div className="d-flex gap-2 p-1 glass-card" style={{borderRadius: '50px', background: 'rgba(0,0,0,0.2)'}}>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="tabs"
+            >
               {tabs.map(tab => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`btn ${activeTab === tab.id ? 'btn-primary' : 'text-btn'}`}
-                  style={{borderRadius: '50px', padding: '0.5rem 1.5rem'}}
+                  className={`tab-btn ${activeTab === tab.id ? 'active' : ''}`}
                 >
                   {tab.label}
                 </button>
               ))}
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
 
           <div className="grid-3">
             <AnimatePresence mode="popLayout">
-              {filteredServices.map((service) => (
+              {filteredServices.map((service, index) => (
                 <motion.div
                   key={service.id}
                   layout
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
+                  initial={{ y: 40, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.3 }}
-                  className="glass-card d-flex flex-column"
-                  style={{ height: "100%" }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="glass-card service-card"
                 >
-                  <div className="card-header">
+                  <div className="card-header-flex">
                     <span className="badge badge-success">
                       <span className="pingBadge">
                         <span className="pingAnim" style={{ backgroundColor: "#34d399" }}></span>
                         <span className="pingDot" style={{ backgroundColor: "#34d399" }}></span>
                       </span>
-                      {t('home.service.ready', 'Sẵn sàng')}
+                      {t('home.service.ready', 'Available')}
                     </span>
 
                     <div className="card-icon-wrapper">
-                      <Trophy size={16} style={{ color: "#f59e0b" }} />
+                      <Trophy size={20} style={{ color: "var(--amber)" }} />
                     </div>
                   </div>
 
-                  <h3 className="card-title">
+                  <h3 className="service-title">
                     {t(`services.${service.id}.name`, service.name)}
                   </h3>
-                  <p className="card-desc line-clamp-2" style={{flex: 1}}>
+                  <p className="service-desc line-clamp-2">
                     {t(`services.${service.id}.desc`, service.description)}
                   </p>
 
-                  <div className="stats-grid mt-3">
-                    <div className="stat-item">
-                      <div className="stat-label"><Users size={12} /> {t('home.service.uses', 'Lượt dùng')}</div>
-                      <div className="stat-value">900+</div>
+                  <div className="statsGrid">
+                    <div className="statItem">
+                      <div className="statItemLabel"><Users size={12} /> {t('home.service.uses', 'Usage')}</div>
+                      <div className="statItemValue">900+</div>
                     </div>
-                    <div className="stat-item">
-                      <div className="stat-label"><Target size={12} /> {t('home.service.rating', 'Đánh giá')}</div>
-                      <div className="stat-value">5.0 <Star size={10} fill="#f59e0b" color="#f59e0b" /></div>
+                    <div className="statItem">
+                      <div className="statItemLabel"><Target size={12} /> {t('home.service.rating', 'Rating')}</div>
+                      <div className="statItemValue">5.0 <Star size={10} fill="var(--amber)" color="var(--amber)" /></div>
                     </div>
-                    <div className="stat-item">
-                      <div className="stat-label"><Layers size={12} /> {t('home.service.vehicle', 'Loại xe')}</div>
-                      <div className="stat-value">{service.category}</div>
+                    <div className="statItem">
+                      <div className="statItemLabel"><Layers size={12} /> {t('home.service.vehicle', 'Category')}</div>
+                      <div className="statItemValue">{service.category}</div>
                     </div>
-                    <div className="stat-item">
-                      <div className="stat-label"><Clock size={12} /> {t('home.service.time', 'Thời gian')}</div>
-                      <div className="stat-value">{service.duration} {t('home.service.minutes', 'phút')}</div>
+                    <div className="statItem">
+                      <div className="statItemLabel"><Clock size={12} /> {t('home.service.time', 'Time')}</div>
+                      <div className="statItemValue">{service.duration} {t('home.service.minutes', 'mins')}</div>
                     </div>
                   </div>
 
-                  <div className="card-action mt-4">
+                  <div style={{ marginTop: "auto", display: "flex", flexDirection: "column", gap: "1rem" }}>
                     <button 
-                      className="btn btn-secondary w-100 d-flex justify-content-center align-items-center"
+                      className="btn btn-secondary w-100"
                       onClick={() => setSelectedService(service)}
                     >
-                      View Details <ArrowRight size={16} style={{ marginLeft: "0.5rem" }} />
+                      View Details <ArrowRight size={16} />
                     </button>
                   </div>
                 </motion.div>
@@ -180,104 +178,108 @@ const Home = () => {
             </AnimatePresence>
           </div>
         </section>
-
       </main>
 
       {/* Modal Details */}
       <AnimatePresence>
         {selectedService && (
-          <div 
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             className="modal-overlay" 
-            onClick={() => setSelectedService(null)}
-            style={{position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, backdropFilter: 'blur(5px)'}}
+            onClick={() => { setSelectedService(null); setShowBookingForm(false); setBookingSuccess(false); }}
           >
             <motion.div
-              initial={{ opacity: 0, y: 50, scale: 0.9 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 50, scale: 0.9 }}
-              className="modal-content glass-card"
-              style={{ maxWidth: '600px', width: '90%', padding: '2.5rem', position: 'relative', border: '1px solid var(--border-color)', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)' }}
+              initial={{ scale: 0.95, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.95, y: 20 }}
+              className="modal-content"
               onClick={e => e.stopPropagation()}
             >
-              <button 
-                className="icon-btn position-absolute" 
-                style={{ top: '1rem', right: '1rem', background: 'rgba(255,255,255,0.1)', borderRadius: '50%', padding: '0.5rem', color: 'var(--text-color)' }}
-                onClick={() => { setSelectedService(null); setShowBookingForm(false); setBookingSuccess(false); }}
-              >
-                <X size={20} />
-              </button>
-              
-              <div className="d-flex align-items-center gap-4 mb-4 pb-4" style={{borderBottom: '1px solid var(--border-color)'}}>
-                <div className="card-icon-wrapper" style={{width: '70px', height: '70px', borderRadius: '15px', background: 'rgba(139, 92, 246, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                  <Trophy size={34} style={{ color: "var(--primary)" }} />
-                </div>
-                <div>
-                  <h2 style={{margin: 0, fontFamily: 'var(--font-display)', fontSize: '1.8rem', color: 'var(--text-color)'}}>{selectedService.name}</h2>
-                  <span className="badge badge-success mt-2" style={{fontSize: '0.8rem'}}>Status: Ready for booking</span>
-                </div>
-              </div>
-              
-              <div className="mb-4">
-                <h4 style={{color: 'var(--text-muted)', marginBottom: '1rem', fontSize: '1.1rem', fontWeight: 600}}>Description</h4>
-                <p style={{lineHeight: 1.7, fontSize: '1.05rem', color: 'var(--text-color)'}}>{selectedService.description}</p>
-              </div>
-
-              <div className="stats-grid mb-5" style={{background: 'var(--bg-color)', padding: '1.5rem', borderRadius: '12px', border: '1px solid var(--border-color)'}}>
-                <div className="stat-item">
-                  <div className="stat-label" style={{color: 'var(--text-muted)'}}><Clock size={16} /> Duration</div>
-                  <div className="stat-value" style={{fontSize: '1.3rem', color: 'var(--text-color)'}}>{selectedService.duration} mins</div>
-                </div>
-                <div className="stat-item">
-                  <div className="stat-label" style={{color: 'var(--text-muted)'}}><DollarSign size={16} /> Price</div>
-                  <div className="stat-value" style={{fontSize: '1.3rem', color: '#10b981', fontWeight: 'bold'}}>{selectedService.price.toLocaleString('vi-VN')} đ</div>
-                </div>
-              </div>
-
-              {!showBookingForm ? (
+              <div className="modal-header">
+                <h2 className="modal-title">Service Details</h2>
                 <button 
-                  className="btn btn-primary w-100 d-flex justify-content-center align-items-center gap-2 py-3"
-                  style={{fontSize: '1.1rem', fontWeight: 600, letterSpacing: '0.5px'}}
-                  onClick={() => {
-                    if (user) {
-                      setShowBookingForm(true);
-                    } else {
-                      navigate('/register', { state: { fromBooking: true } });
-                    }
-                  }}
+                  className="icon-btn" 
+                  onClick={() => { setSelectedService(null); setShowBookingForm(false); setBookingSuccess(false); }}
                 >
-                  Book This Service <ArrowRight size={20} />
+                  <X size={24} />
                 </button>
-              ) : (
-                <div style={{background: 'var(--bg-color)', padding: '1.5rem', borderRadius: '12px', border: '1px solid var(--border-color)'}}>
-                  <h4 className="mb-3" style={{color: 'var(--text-color)'}}>Xác nhận đặt lịch</h4>
-                  {bookingSuccess ? (
-                    <div className="text-center py-3" style={{color: '#10b981'}}>
-                      <CheckCircle size={40} className="mb-2" />
-                      <p className="m-0" style={{fontSize: '1.1rem'}}>Đặt lịch thành công! Đang chuyển hướng...</p>
-                    </div>
-                  ) : (
-                    <>
-                      <input type="date" className="form-control mb-3" style={{background: 'var(--card-bg)', color: 'var(--text-color)', border: '1px solid var(--border-color)'}} required />
-                      <input type="time" className="form-control mb-3" style={{background: 'var(--card-bg)', color: 'var(--text-color)', border: '1px solid var(--border-color)'}} required />
-                      <button 
-                        className="btn btn-primary w-100" 
-                        style={{padding: '0.8rem', fontSize: '1.1rem'}}
-                        onClick={() => {
-                          setBookingSuccess(true);
-                          setTimeout(() => {
-                            setSelectedService(null);
-                            setShowBookingForm(false);
-                            setBookingSuccess(false);
-                            navigate('/user');
-                          }, 1500);
-                        }}
-                      >Xác nhận ngay</button>
-                    </>
-                  )}
+              </div>
+              
+              <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+                <div>
+                  <h3 style={{ fontSize: "1.25rem", fontWeight: "bold", color: "var(--primary-hover)", marginBottom: "0.5rem", fontFamily: 'var(--font-display)' }}>
+                    {selectedService.name}
+                  </h3>
+                  <p style={{ color: "var(--text-muted)", fontSize: "0.95rem" }}>
+                    {selectedService.description}
+                  </p>
                 </div>
-              )}
+
+                <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+                  <span className="badge badge-success">Available</span>
+                  <span className="badge badge-neutral"><Clock size={12} style={{ marginRight: "4px" }} /> {selectedService.duration} mins</span>
+                  <span className="badge badge-neutral"><Layers size={12} style={{ marginRight: "4px" }} /> {selectedService.category}</span>
+                </div>
+
+                <div style={{ background: "rgba(245, 158, 11, 0.06)", padding: "1.25rem", borderRadius: "12px", border: "1px solid rgba(245, 158, 11, 0.25)" }}>
+                  <h4 style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontWeight: 700, color: "var(--amber)", marginBottom: "1rem", fontSize: "1.05rem" }}>
+                    <DollarSign size={20} /> Pricing Information
+                  </h4>
+                  <div style={{ fontSize: "1.5rem", fontWeight: "bold", color: "var(--text-main)", fontFamily: "var(--font-display)" }}>
+                    {selectedService.price.toLocaleString('vi-VN')} đ
+                  </div>
+                </div>
+
+                {!showBookingForm ? (
+                  <button 
+                    className="btn btn-primary w-100 d-flex justify-content-center align-items-center gap-2"
+                    style={{ padding: "0.8rem", fontSize: "1rem" }}
+                    onClick={() => {
+                      if (user) {
+                        setShowBookingForm(true);
+                      } else {
+                        navigate('/register', { state: { fromBooking: true } });
+                      }
+                    }}
+                  >
+                    Book This Service <ArrowRight size={18} />
+                  </button>
+                ) : (
+                  <div style={{ background: "rgba(99, 102, 241, 0.05)", padding: "1.5rem", borderRadius: "12px", border: "1px solid var(--border-color)" }}>
+                    <h4 className="mb-3" style={{ color: "var(--text-main)", fontFamily: 'var(--font-display)' }}>Xác nhận đặt lịch</h4>
+                    {bookingSuccess ? (
+                      <div className="text-center py-3" style={{ color: "var(--emerald)" }}>
+                        <CheckCircle size={40} className="mb-2" />
+                        <p className="m-0" style={{ fontSize: '1rem', fontWeight: 500 }}>Đặt lịch thành công! Đang chuyển hướng...</p>
+                      </div>
+                    ) : (
+                      <div className="form-group" style={{ gap: '1rem' }}>
+                        <input type="date" className="form-input" required />
+                        <input type="time" className="form-input" required />
+                        <button 
+                          className="btn btn-primary w-100" 
+                          style={{ padding: '0.8rem', marginTop: '0.5rem' }}
+                          onClick={() => {
+                            setBookingSuccess(true);
+                            setTimeout(() => {
+                              setSelectedService(null);
+                              setShowBookingForm(false);
+                              setBookingSuccess(false);
+                              navigate('/user');
+                            }, 1500);
+                          }}
+                        >
+                          Xác nhận ngay
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
             </motion.div>
-          </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </div>

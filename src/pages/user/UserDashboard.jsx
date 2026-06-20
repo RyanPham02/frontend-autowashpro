@@ -39,7 +39,7 @@ const UserDashboard = () => {
         <div className="row">
           {/* Cột trái: Thông tin tài khoản */}
           <div className="col-md-4 mb-4">
-            <div className="card glass-card p-4 h-100">
+            <div className="glass-card h-100">
               <div className="d-flex align-items-center gap-3 mb-4">
                 <div style={{
                   width: '60px', height: '60px', borderRadius: '50%', 
@@ -70,15 +70,15 @@ const UserDashboard = () => {
             </div>
             
             {/* Garage Section */}
-            <div className="card glass-card p-4 mt-4 h-100">
-              <h3 className="d-flex align-items-center gap-2 mb-4" style={{fontSize: '1.2rem'}}>
+            <div className="glass-card mt-4 h-100">
+              <h3 className="d-flex align-items-center gap-2 mb-4" style={{fontSize: '1.2rem', fontFamily: 'var(--font-display)'}}>
                 <Car size={20} /> Garage của tôi
               </h3>
               
               <div className="d-flex gap-2 mb-4">
                 <input 
                   type="text" 
-                  className="form-control" 
+                  className="form-input" 
                   placeholder="Nhập biển số xe (VD: 51G-123.45)" 
                   value={newPlate}
                   onChange={(e) => setNewPlate(e.target.value)}
@@ -90,7 +90,7 @@ const UserDashboard = () => {
 
               <div className="garage-list d-flex flex-column gap-2">
                 {garage.map(car => (
-                  <div key={car.id} className="d-flex justify-content-between align-items-center p-3 rounded" style={{background: 'var(--bg-color)', border: '1px solid var(--border-color)'}}>
+                  <div key={car.id} className="d-flex justify-content-between align-items-center p-3 rounded" style={{background: 'var(--surface-2)', border: '1px solid var(--border-color-2)'}}>
                     <div>
                       <div style={{fontWeight: 'bold', fontSize: '1.1rem'}}>{car.plate}</div>
                       <div style={{fontSize: '0.85rem', color: 'var(--text-muted)'}}>{car.brand} • {car.type}</div>
@@ -109,16 +109,16 @@ const UserDashboard = () => {
 
           {/* Cột phải: Lịch sử đặt lịch */}
           <div className="col-md-8">
-            <div className="card glass-card p-4">
-              <h3 className="d-flex align-items-center gap-2 mb-4" style={{fontSize: '1.3rem'}}>
+            <div className="glass-card">
+              <h3 className="d-flex align-items-center gap-2 mb-4" style={{fontSize: '1.3rem', fontFamily: 'var(--font-display)'}}>
                 <History size={20} /> Lịch sử đặt dịch vụ
               </h3>
               
               <div className="booking-list">
                 {myBookings.map((booking) => (
-                  <div key={booking.id} className="mb-3 p-3 rounded" style={{border: '1px solid var(--border-color)'}}>
+                  <div key={booking.id} className="mb-3 p-3 rounded" style={{background: 'var(--surface-2)', border: '1px solid var(--border-color-2)'}}>
                     <div className="d-flex justify-content-between align-items-start mb-2">
-                      <h4 className="m-0" style={{fontSize: '1.1rem'}}>{booking.service}</h4>
+                      <h4 className="m-0" style={{fontSize: '1.1rem', color: 'var(--text-main)'}}>{booking.service}</h4>
                       <span className="badge" style={{
                         background: booking.status === 'Completed' ? 'rgba(16, 185, 129, 0.1)' : 'rgba(245, 158, 11, 0.1)',
                         color: booking.status === 'Completed' ? '#10b981' : '#f59e0b'
