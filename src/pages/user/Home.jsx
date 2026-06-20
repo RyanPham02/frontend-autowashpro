@@ -4,18 +4,76 @@ import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { servicesData } from '../../mocks/servicesData';
 import { useAuth } from '../../context/AuthContext';
-import { Clock, Star, ArrowRight, Rocket, Users, Target, Layers, Trophy, X, DollarSign, CheckCircle } from 'lucide-react';
+import { Clock, Star, ArrowRight, Rocket, Users, Target, Layers, Trophy, X, DollarSign, CheckCircle, Tag } from 'lucide-react';
 import './Home.css';
 
 const Home = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, addBooking, deductWallet } = useAuth();
   
   const [activeTab, setActiveTab] = useState('all');
   const [selectedService, setSelectedService] = useState(null);
   const [showBookingForm, setShowBookingForm] = useState(false);
   const [bookingSuccess, setBookingSuccess] = useState(false);
+  
+  // Booking Form State
+  const [bDate, setBDate] = useState('');
+  const [bTime, setBTime] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState('cash');
+  const [voucherCode, setVoucherCode] = useState('');
+  const [appliedVoucher, setAppliedVoucher] = useState(null);
+  const [bookingError, setBookingError] = useState('');
+
+  const handleApplyVoucher = () => {
+    if (!user?.vouchers) return;
+    const found = user.vouchers.find(v => v.code === voucherCode);
+    if (found) {
+      setAppliedVoucher(found);
+      setBookingError('');
+    } else {
+      setBookingError('Mã voucher không hợp lệ hoặc đã hết hạn.');
+      setAppliedVoucher(null);
+    }
+  };
+
+  const handleConfirmBooking = () => {
+    if (!bDate || !bTime) {
+      setBookingError('Vui lòng chọn ngày và giờ.');
+      return;
+    }
+
+    const finalPrice = selectedService.price - (appliedVoucher ? appliedVoucher.discount : 0);
+    
+    if (paymentMethod === 'wallet') {
+      if ((user.balance || 0) < finalPrice) {
+        setBookingError('Số dư ví không đủ. Vui lòng nạp thêm hoặc chọn Tiền mặt.');
+        return;
+      }
+      deductWallet(finalPrice);
+    }
+
+    // Add booking to global state
+    addBooking({
+      customerName: user.name,
+      vehicle: 'Chưa cập nhật',
+      service: selectedService.name,
+      time: bTime,
+      date: bDate,
+      price: finalPrice,
+      paymentMethod,
+    });
+
+    setBookingSuccess(true);
+    setTimeout(() => {
+      setSelectedService(null);
+      setShowBookingForm(false);
+      setBookingSuccess(false);
+      // Reset form
+      setBDate(''); setBTime(''); setPaymentMethod('cash'); setVoucherCode(''); setAppliedVoucher(null);
+      navigate('/user');
+    }, 1500);
+  };
 
   const tabs = [
     { id: 'all', label: 'Tất cả' },
@@ -188,7 +246,10 @@ const Home = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="modal-overlay" 
-            onClick={() => { setSelectedService(null); setShowBookingForm(false); setBookingSuccess(false); }}
+            onClick={() => { 
+              setSelectedService(null); setShowBookingForm(false); setBookingSuccess(false); 
+              setAppliedVoucher(null); setVoucherCode(''); setBookingError('');
+            }}
           >
             <motion.div
               initial={{ scale: 0.95, y: 20 }}
@@ -201,7 +262,10 @@ const Home = () => {
                 <h2 className="modal-title">Service Details</h2>
                 <button 
                   className="icon-btn" 
-                  onClick={() => { setSelectedService(null); setShowBookingForm(false); setBookingSuccess(false); }}
+                  onClick={() => { 
+                    setSelectedService(null); setShowBookingForm(false); setBookingSuccess(false); 
+                    setAppliedVoucher(null); setVoucherCode(''); setBookingError('');
+                  }}
                 >
                   <X size={24} />
                 </button>
@@ -255,23 +319,61 @@ const Home = () => {
                         <p className="m-0" style={{ fontSize: '1rem', fontWeight: 500 }}>Đặt lịch thành công! Đang chuyển hướng...</p>
                       </div>
                     ) : (
-                      <div className="form-group" style={{ gap: '1rem' }}>
-                        <input type="date" className="form-input" required />
-                        <input type="time" className="form-input" required />
+                      <div className="form-group" style={{ gap: '1rem', display: 'flex', flexDirection: 'column' }}>
+                        {bookingError && <div style={{color: '#ef4444', fontSize: '0.9rem', padding: '0.5rem', background: 'rgba(239,68,68,0.1)', borderRadius: '4px'}}>{bookingError}</div>}
+                        
+                        <div className="d-flex gap-2">
+                          <input type="date" className="form-input flex-fill" required value={bDate} onChange={e => setBDate(e.target.value)} />
+                          <input type="time" className="form-input flex-fill" required value={bTime} onChange={e => setBTime(e.target.value)} />
+                        </div>
+
+                        {/* Voucher Section */}
+                        <div className="d-flex gap-2 align-items-center p-3 rounded mt-2" style={{background: 'rgba(255,255,255,0.02)', border: '1px solid var(--border-color)'}}>
+                          <Tag size={20} style={{color: 'var(--primary-hover)'}} />
+                          <input 
+                            type="text" 
+                            className="form-input flex-fill m-0" 
+                            placeholder="Nhập mã giảm giá" 
+                            style={{padding: '0.4rem 0.8rem', minHeight: 'auto'}}
+                            value={voucherCode}
+                            onChange={e => setVoucherCode(e.target.value)}
+                          />
+                          <button className="btn btn-secondary" style={{padding: '0.4rem 1rem'}} onClick={handleApplyVoucher}>Áp dụng</button>
+                        </div>
+
+                        {/* Payment Method Section */}
+                        <div className="mt-2">
+                          <label className="d-block mb-2 text-muted" style={{fontSize: '0.9rem'}}>Phương thức thanh toán</label>
+                          <div className="d-flex gap-2">
+                            <button 
+                              className={`btn flex-fill ${paymentMethod === 'wallet' ? 'btn-primary' : 'btn-secondary'}`}
+                              onClick={() => setPaymentMethod('wallet')}
+                            >
+                              Ví AW Pay ({(user?.balance || 0).toLocaleString()}đ)
+                            </button>
+                            <button 
+                              className={`btn flex-fill ${paymentMethod === 'cash' ? 'btn-primary' : 'btn-secondary'}`}
+                              onClick={() => setPaymentMethod('cash')}
+                            >
+                              Tiền mặt
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Total Summary */}
+                        <div className="p-3 mt-3 rounded d-flex justify-content-between align-items-center" style={{background: 'rgba(16, 185, 129, 0.1)', border: '1px dashed var(--emerald)'}}>
+                          <span style={{color: 'var(--emerald)'}}>Tổng thanh toán:</span>
+                          <span style={{fontSize: '1.25rem', fontWeight: 'bold', color: 'var(--emerald)'}}>
+                            {(selectedService.price - (appliedVoucher ? appliedVoucher.discount : 0)).toLocaleString('vi-VN')} đ
+                          </span>
+                        </div>
+
                         <button 
                           className="btn btn-primary w-100" 
                           style={{ padding: '0.8rem', marginTop: '0.5rem' }}
-                          onClick={() => {
-                            setBookingSuccess(true);
-                            setTimeout(() => {
-                              setSelectedService(null);
-                              setShowBookingForm(false);
-                              setBookingSuccess(false);
-                              navigate('/user');
-                            }, 1500);
-                          }}
+                          onClick={handleConfirmBooking}
                         >
-                          Xác nhận ngay
+                          Xác nhận đặt lịch
                         </button>
                       </div>
                     )}

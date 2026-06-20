@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { DollarSign, Droplets, Users, TrendingUp } from 'lucide-react';
-import { bookingsData } from '../mocks/bookingsData';
 import './Dashboard.css';
 
 // Mock data cho Biểu đồ
@@ -24,8 +23,11 @@ const serviceDistributionData = [
 ];
 const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6'];
 
+import { useAuth } from '../context/AuthContext';
+
 const Dashboard = () => {
   const { t } = useTranslation();
+  const { bookings, updateBookingStep } = useAuth();
 
   return (
     <div className="dashboard">
@@ -137,19 +139,33 @@ const Dashboard = () => {
                   <th>{t('adminDict.table.service')}</th>
                   <th>{t('adminDict.table.time')}</th>
                   <th>{t('adminDict.table.status')}</th>
+                  <th>CẬP NHẬT TIẾN ĐỘ</th>
                 </tr>
               </thead>
               <tbody>
-                {bookingsData.slice(0, 4).map(booking => (
+                {bookings.slice(0, 5).map(booking => (
                   <tr key={booking.id}>
                     <td>{booking.customerName}</td>
-                    <td><span className="plate-badge">{booking.vehicle.split(' - ')[1]}</span></td>
+                    <td><span className="plate-badge">{booking.vehicle?.split(' - ')[1] || 'CX-X'}</span></td>
                     <td>{booking.service}</td>
                     <td>{booking.time}</td>
                     <td>
                       <span className={`status-badge ${booking.status.toLowerCase().replace(' ', '-')}`}>
                         {booking.status}
                       </span>
+                    </td>
+                    <td>
+                      {booking.trackingStep < 4 ? (
+                        <button 
+                          className="btn btn-sm btn-primary" 
+                          style={{padding: '0.25rem 0.5rem', fontSize: '0.75rem'}}
+                          onClick={() => updateBookingStep(booking.id, (booking.trackingStep || 1) + 1)}
+                        >
+                          Chuyển bước { (booking.trackingStep || 1) + 1}
+                        </button>
+                      ) : (
+                        <span className="text-muted" style={{fontSize: '0.8rem'}}>Hoàn thành</span>
+                      )}
                     </td>
                   </tr>
                 ))}
