@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
-import { servicesData } from '../../mocks/servicesData';
 import { useAuth } from '../../context/AuthContext';
-import { Clock, Star, ArrowRight, Rocket, Users, Target, Layers, Trophy, X, DollarSign, CheckCircle, Tag } from 'lucide-react';
+import { Search, MapPin, CreditCard, Shield, Clock, Users, ArrowRight, X, ChevronRight, CheckCircle, Ticket, Wallet, Calendar, Plus, User, Star, Trophy, Target, Layers, Map, Rocket, DollarSign, Tag } from 'lucide-react';
+import { servicesData } from '../../mocks/servicesData';
 import './Home.css';
 
 const Home = () => {
@@ -234,6 +234,76 @@ const Home = () => {
                 </motion.div>
               ))}
             </AnimatePresence>
+          </div>
+        </section>
+
+        {/* Store Locator Section */}
+        <section className="store-locator-section w-100" style={{paddingTop: '4rem', paddingBottom: '2rem', maxWidth: '1100px', margin: '0 auto'}}>
+          <div className="text-center mb-5">
+            <h2 className="section-title justify-content-center m-0">
+              <Map style={{ color: "var(--primary)" }} /> Hệ Thống Chi Nhánh Toàn Quốc
+            </h2>
+            <p className="text-muted mt-2">Đến ngay AutoWash Pro gần nhất để trải nghiệm dịch vụ 5 sao</p>
+          </div>
+          
+          <div className="glass-card" style={{padding: '0', overflow: 'hidden', border: '1px solid var(--border-color)'}}>
+            <div className="row g-0">
+              <div className="col-md-4 p-4" style={{background: 'var(--surface-2)'}}>
+                <h4 className="mb-4" style={{fontFamily: 'var(--font-display)'}}>Danh sách chi nhánh</h4>
+                <div className="d-flex flex-column gap-3">
+                  <div className="p-3 rounded" style={{background: 'rgba(99, 102, 241, 0.1)', border: '1px solid var(--primary)'}}>
+                    <h5 className="fw-bold m-0 text-white">AutoWash Pro - Quận 1 (Trụ sở)</h5>
+                    <p className="text-muted m-0 mt-1" style={{fontSize: '0.85rem'}}>123 Lê Lợi, P. Bến Nghé, Quận 1, TP.HCM</p>
+                    <div className="d-flex justify-content-between align-items-center mt-3">
+                      <span className="badge badge-success px-2 py-1" style={{fontSize: '0.75rem'}}>Đang mở cửa</span>
+                      <span className="text-primary fw-bold" style={{fontSize: '0.85rem'}}>Cách bạn 2.5km</span>
+                    </div>
+                  </div>
+                  <div className="p-3 rounded" style={{background: 'rgba(0,0,0,0.2)', border: '1px solid var(--border-color)'}}>
+                    <h5 className="fw-bold m-0 text-white">AutoWash Pro - Quận 7</h5>
+                    <p className="text-muted m-0 mt-1" style={{fontSize: '0.85rem'}}>456 Nguyễn Văn Linh, P. Tân Phong, Quận 7</p>
+                    <div className="d-flex justify-content-between align-items-center mt-3">
+                      <span className="badge badge-success px-2 py-1" style={{fontSize: '0.75rem'}}>Đang mở cửa</span>
+                      <span className="text-muted" style={{fontSize: '0.85rem'}}>Cách bạn 8.1km</span>
+                    </div>
+                  </div>
+                  <div className="p-3 rounded" style={{background: 'rgba(0,0,0,0.2)', border: '1px solid var(--border-color)'}}>
+                    <h5 className="fw-bold m-0 text-white">AutoWash Pro - Thủ Đức</h5>
+                    <p className="text-muted m-0 mt-1" style={{fontSize: '0.85rem'}}>789 Võ Văn Ngân, P. Linh Chiểu, TP. Thủ Đức</p>
+                    <div className="d-flex justify-content-between align-items-center mt-3">
+                      <span className="badge px-2 py-1" style={{background: 'var(--amber)', color: '#000', fontSize: '0.75rem'}}>Đông đúc</span>
+                      <span className="text-muted" style={{fontSize: '0.85rem'}}>Cách bạn 15km</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-8 position-relative" style={{minHeight: '400px', background: '#1a1f2e'}}>
+                {/* Fake Map Background */}
+                <div style={{
+                  position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, 
+                  backgroundImage: 'radial-gradient(var(--border-color) 1px, transparent 1px)', 
+                  backgroundSize: '20px 20px', opacity: 0.3
+                }}></div>
+                {/* Map Pins */}
+                <div style={{position: 'absolute', top: '40%', left: '30%', transform: 'translate(-50%, -50%)', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                  <div style={{background: 'var(--primary)', color: 'white', padding: '4px 8px', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 'bold', marginBottom: '4px'}}>Chi nhánh Q1</div>
+                  <MapPin size={32} color="var(--primary)" fill="rgba(99,102,241,0.2)" />
+                  <div style={{width: 40, height: 40, background: 'var(--primary)', borderRadius: '50%', opacity: 0.2, position: 'absolute', bottom: -10, animation: 'ping 2s infinite'}}></div>
+                </div>
+                <div style={{position: 'absolute', top: '70%', left: '60%', transform: 'translate(-50%, -50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', opacity: 0.7}}>
+                  <div style={{background: 'var(--surface-2)', color: 'var(--text-muted)', padding: '4px 8px', borderRadius: '4px', fontSize: '0.8rem', marginBottom: '4px', border: '1px solid var(--border-color)'}}>Chi nhánh Q7</div>
+                  <MapPin size={24} color="var(--text-muted)" />
+                </div>
+                <div style={{position: 'absolute', top: '20%', left: '80%', transform: 'translate(-50%, -50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', opacity: 0.7}}>
+                  <div style={{background: 'var(--surface-2)', color: 'var(--text-muted)', padding: '4px 8px', borderRadius: '4px', fontSize: '0.8rem', marginBottom: '4px', border: '1px solid var(--border-color)'}}>Chi nhánh Thủ Đức</div>
+                  <MapPin size={24} color="var(--text-muted)" />
+                </div>
+                
+                <button className="btn btn-primary position-absolute" style={{bottom: '20px', right: '20px', boxShadow: '0 10px 25px rgba(0,0,0,0.5)'}}>
+                  Mở Google Maps <ArrowRight size={16} />
+                </button>
+              </div>
+            </div>
           </div>
         </section>
 

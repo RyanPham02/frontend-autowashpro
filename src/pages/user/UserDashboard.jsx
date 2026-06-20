@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
-import { Calendar, Clock, MapPin, Award, History, Car, Plus, Trash2, Wallet, Tag, CheckCircle, CreditCard, X, ChevronRight, Video, Star } from 'lucide-react';
+import { Calendar, Clock, MapPin, Award, History, Car, Plus, Trash2, Wallet, Tag, CheckCircle, CreditCard, X, ChevronRight, Video, Star, Gift, AlertTriangle, PenTool } from 'lucide-react';
 import './UserDashboard.css';
 
 const UserDashboard = () => {
@@ -15,13 +15,15 @@ const UserDashboard = () => {
   const [showCameraModal, setShowCameraModal] = useState(false);
   const [showRatingModal, setShowRatingModal] = useState(null); // stores booking ID
   const [ratingVal, setRatingVal] = useState(0);
+  const [wheelSpinning, setWheelSpinning] = useState(false);
+  const [spinResult, setSpinResult] = useState('');
 
-  const { rateBooking } = useAuth();
+  const { rateBooking, dailyCheckin, playLuckyWheel } = useAuth();
 
   // Mock data garage
   const [garage, setGarage] = useState([
-    { id: 1, plate: '51G-123.45', type: 'Sedan 4 chỗ', brand: 'Toyota Camry' },
-    { id: 2, plate: '51F-987.65', type: 'SUV 7 chỗ', brand: 'Ford Everest' }
+    { id: 1, plate: '51G-123.45', type: 'Sedan 4 chỗ', brand: 'Toyota Camry', odometer: 45000, lastServiceOdo: 40000 },
+    { id: 2, plate: '51F-987.65', type: 'SUV 7 chỗ', brand: 'Ford Everest', odometer: 120000, lastServiceOdo: 118000 }
   ]);
   const [newPlate, setNewPlate] = useState('');
 
@@ -29,8 +31,29 @@ const UserDashboard = () => {
 
   const addCar = () => {
     if (newPlate.trim()) {
-      setGarage([...garage, { id: Date.now(), plate: newPlate, type: 'Chưa xác định', brand: 'Chưa xác định' }]);
+      setGarage([...garage, { id: Date.now(), plate: newPlate, type: 'Chưa xác định', brand: 'Chưa xác định', odometer: 0, lastServiceOdo: 0 }]);
       setNewPlate('');
+    }
+  };
+
+  const updateOdo = (id, currentVal) => {
+    const newVal = prompt('Nhập số km (Odometer) hiện tại của xe:', currentVal);
+    if (newVal && !isNaN(newVal)) {
+      setGarage(garage.map(car => car.id === id ? { ...car, odometer: parseInt(newVal) } : car));
+    }
+  };
+
+  const handleSpinWheel = () => {
+    if (playLuckyWheel(500)) {
+      setWheelSpinning(true);
+      setSpinResult('');
+      setTimeout(() => {
+        setWheelSpinning(false);
+        const prizes = ['Giảm 50K', 'Giảm 100K', 'Rửa xe miễn phí', 'Trượt rồi! Chúc may mắn lần sau'];
+        setSpinResult(prizes[Math.floor(Math.random() * prizes.length)]);
+      }, 3000);
+    } else {
+      alert('Bạn không đủ điểm để quay (Cần 500 điểm)');
     }
   };
 
@@ -133,6 +156,26 @@ const UserDashboard = () => {
                       {user?.membership ? `Gói Hội Viên: ${user.membership.plan}` : 'Còn 500 điểm nữa để lên Hạng Bạch Kim'}
                     </p>
                   </div>
+
+                  {/* GAMIFICATION SECTION */}
+                  <div className="mt-4 p-3 rounded" style={{border: '1px solid var(--border-color)', background: 'var(--surface-2)'}}>
+                    <h4 className="m-0 mb-3 d-flex align-items-center gap-2" style={{fontSize: '1.1rem'}}><Gift size={18} color="var(--primary)"/> Nhiệm vụ & Giải trí</h4>
+                    
+                    <button className="btn btn-secondary w-100 d-flex justify-content-between align-items-center mb-2" onClick={() => dailyCheckin()}>
+                      <span>Điểm danh hàng ngày</span>
+                      <span style={{color: 'var(--emerald)', fontWeight: 'bold'}}>+50 Điểm</span>
+                    </button>
+
+                    <div className="p-3 rounded mt-3 text-center" style={{background: 'linear-gradient(45deg, rgba(99, 102, 241, 0.1), rgba(245, 158, 11, 0.1))', border: '1px dashed var(--primary-hover)'}}>
+                      <div className="mb-2" style={{fontWeight: 'bold', color: 'var(--text-main)'}}>Vòng Quay May Mắn (500 điểm/lần)</div>
+                      {wheelSpinning ? (
+                        <div className="py-2"><div style={{width: 30, height: 30, border: '3px solid var(--primary)', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto'}}></div></div>
+                      ) : (
+                        <button className="btn btn-primary btn-sm px-4" onClick={handleSpinWheel}>Quay Ngay</button>
+                      )}
+                      {spinResult && <div className="mt-2 fw-bold" style={{color: spinResult.includes('Trượt') ? 'var(--text-muted)' : 'var(--emerald)'}}>{spinResult}</div>}
+                    </div>
+                  </div>
                 </div>
               </div>
               
@@ -155,18 +198,44 @@ const UserDashboard = () => {
                     </button>
                   </div>
 
-                  <div className="garage-list d-flex flex-column gap-2">
-                    {garage.map(car => (
-                      <div key={car.id} className="d-flex justify-content-between align-items-center p-3 rounded" style={{background: 'var(--surface-2)', border: '1px solid var(--border-color-2)'}}>
-                        <div>
-                          <div style={{fontWeight: 'bold', fontSize: '1.1rem'}}>{car.plate}</div>
-                          <div style={{fontSize: '0.85rem', color: 'var(--text-muted)'}}>{car.brand} • {car.type}</div>
+                  <div className="garage-list d-flex flex-column gap-3">
+                    {garage.map(car => {
+                      const kmSinceLastService = car.odometer - car.lastServiceOdo;
+                      const needsService = kmSinceLastService >= 5000;
+
+                      return (
+                        <div key={car.id} className="p-3 rounded" style={{background: 'var(--surface-2)', border: '1px solid var(--border-color-2)'}}>
+                          <div className="d-flex justify-content-between align-items-start mb-2">
+                            <div>
+                              <div style={{fontWeight: 'bold', fontSize: '1.2rem', fontFamily: 'var(--font-display)'}}>{car.plate}</div>
+                              <div style={{fontSize: '0.85rem', color: 'var(--text-muted)'}}>{car.brand} • {car.type}</div>
+                            </div>
+                            <button className="icon-btn" onClick={() => removeCar(car.id)} style={{color: '#ef4444'}}>
+                              <Trash2 size={18} />
+                            </button>
+                          </div>
+
+                          {/* Maintenance Tracker */}
+                          <div className="mt-3 p-2 rounded" style={{background: 'rgba(0,0,0,0.2)', fontSize: '0.85rem'}}>
+                            <div className="d-flex justify-content-between align-items-center mb-1">
+                              <span className="text-muted d-flex align-items-center gap-1"><PenTool size={14}/> Số KM hiện tại:</span>
+                              <span className="fw-bold" style={{cursor: 'pointer', color: 'var(--primary-hover)'}} onClick={() => updateOdo(car.id, car.odometer)}>
+                                {car.odometer.toLocaleString()} km ✎
+                              </span>
+                            </div>
+                            {needsService ? (
+                              <div className="mt-2 p-2 rounded d-flex align-items-center gap-2" style={{background: 'rgba(239, 68, 68, 0.1)', color: 'var(--rose)', border: '1px solid rgba(239, 68, 68, 0.3)'}}>
+                                <AlertTriangle size={16} /> <span>Đã chạy {kmSinceLastService.toLocaleString()}km từ lần bảo dưỡng trước. <b>Cần thay nhớt ngay!</b></span>
+                              </div>
+                            ) : (
+                              <div className="mt-2 text-muted">
+                                Còn {(5000 - kmSinceLastService).toLocaleString()}km nữa đến đợt bảo dưỡng tiếp theo.
+                              </div>
+                            )}
+                          </div>
                         </div>
-                        <button className="icon-btn" onClick={() => removeCar(car.id)} style={{color: '#ef4444'}}>
-                          <Trash2 size={18} />
-                        </button>
-                      </div>
-                    ))}
+                      );
+                    })}
                     {garage.length === 0 && (
                       <p className="text-muted text-center mt-2">Chưa có xe nào trong Garage.</p>
                     )}

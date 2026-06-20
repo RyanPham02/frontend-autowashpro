@@ -17,7 +17,6 @@ export const AuthProvider = ({ children }) => {
     if (savedBookings) {
       return JSON.parse(savedBookings);
     }
-    // Convert existing mock data to have step-based tracking
     return bookingsData.map(b => ({
       ...b,
       trackingStep: b.status === 'Completed' ? 4 : (b.status === 'In Progress' ? 2 : 1),
@@ -25,9 +24,27 @@ export const AuthProvider = ({ children }) => {
     }));
   });
 
+  const [notifications, setNotifications] = useState(() => {
+    const savedNotifs = localStorage.getItem('autoWashNotifs');
+    return savedNotifs ? JSON.parse(savedNotifs) : [];
+  });
+
   useEffect(() => {
     localStorage.setItem('autoWashBookings', JSON.stringify(bookings));
   }, [bookings]);
+
+  useEffect(() => {
+    localStorage.setItem('autoWashNotifs', JSON.stringify(notifications));
+  }, [notifications]);
+
+  const addNotification = (title, message, type = 'info') => {
+    const newNotif = { id: Date.now(), title, message, type, isRead: false, time: new Date().toLocaleTimeString() };
+    setNotifications(prev => [newNotif, ...prev]);
+  };
+
+  const markNotificationsRead = () => {
+    setNotifications(prev => prev.map(n => ({ ...n, isRead: true })));
+  };
 
   const login = (email, password, isAdminLogin = false) => {
     if (isAdminLogin) {
@@ -86,6 +103,7 @@ export const AuthProvider = ({ children }) => {
     if (user && user.role === 'user') {
       const updatedUser = { ...user, balance: (user.balance || 0) + amount };
       updateUser(updatedUser);
+      addNotification('Nạp tiền thành công', `Bạn vừa nạp ${amount.toLocaleString('vi-VN')} đ vào ví AW Pay.`, 'success');
       return true;
     }
     return false;
@@ -120,6 +138,15 @@ export const AuthProvider = ({ children }) => {
     setBookings(bookings.map(b => 
       b.id === bookingId ? { ...b, trackingStep: step, status: statusString } : b
     ));
+
+    const bk = bookings.find(b => b.id === bookingId);
+    if (bk) {
+      let msg = '';
+      if (step === 2) msg = 'Xe của bạn đang được thi công. Có thể xem Camera trực tiếp!';
+      if (step === 3) msg = 'Xe của bạn đã xong, vui lòng đến nhận xe!';
+      if (step === 4) msg = 'Dịch vụ hoàn tất. Cảm ơn bạn đã sử dụng AutoWash Pro!';
+      if (msg) addNotification(`Cập nhật tiến độ: ${bk.service}`, msg, 'info');
+    }
   };
 
   const rateBooking = (bookingId, rating, pointsAwarded) => {
@@ -140,16 +167,37 @@ export const AuthProvider = ({ children }) => {
         membership: { plan: planName, expiresAt: '2026-12-31' }
       };
       updateUser(updatedUser);
+      addNotification('Đăng ký VIP thành công', `Bạn đã trở thành hội viên gói ${planName}.`, 'success');
       return { success: true };
     }
     return { success: false, message: 'Số dư ví không đủ' };
+  };
+
+  const playLuckyWheel = (cost) => {
+    if (user && user.role === 'user' && user.points >= cost) {
+      const updatedUser = { ...user, points: user.points - cost };
+      updateUser(updatedUser);
+      return true;
+    }
+    return false;
+  };
+
+  const dailyCheckin = () => {
+    if (user && user.role === 'user') {
+      const updatedUser = { ...user, points: (user.points || 0) + 50 };
+      updateUser(updatedUser);
+      addNotification('Điểm danh hàng ngày', 'Bạn nhận được 50 điểm thưởng!', 'success');
+      return true;
+    }
+    return false;
   };
 
   return (
     <AuthContext.Provider value={{ 
       user, login, logout, depositWallet, deductWallet, 
       bookings, addBooking, updateBookingStep,
-      rateBooking, subscribeMembership
+      rateBooking, subscribeMembership,
+      notifications, markNotificationsRead, playLuckyWheel, dailyCheckin
     }}>
       {children}
     </AuthContext.Provider>

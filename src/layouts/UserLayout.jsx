@@ -3,15 +3,18 @@ import { Link, Outlet } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { useTranslation } from 'react-i18next';
-import { LogIn, LogOut, User, Sun, Moon, Globe, Zap, Menu, X, MessageCircle, Send } from 'lucide-react';
+import { LogIn, LogOut, User, Sun, Moon, Globe, Zap, Menu, X, MessageCircle, Send, Bell } from 'lucide-react';
 import './UserLayout.css';
 
 const UserLayout = () => {
-  const { user, logout } = useAuth();
+  const { user, logout, notifications, markNotificationsRead } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const { t, i18n } = useTranslation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
+
+  const unreadCount = notifications ? notifications.filter(n => !n.isRead).length : 0;
 
   const toggleLanguage = () => {
     const newLang = i18n.language === 'vi' ? 'en' : 'vi';
@@ -48,6 +51,45 @@ const UserLayout = () => {
               <button onClick={toggleTheme} className="icon-btn" title={t('header.changeTheme')}>
                 {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
               </button>
+              
+              {/* Notification Bell */}
+              {user && (
+                <div className="position-relative">
+                  <button 
+                    className="icon-btn" 
+                    onClick={() => {
+                      setShowNotifications(!showNotifications);
+                      if (!showNotifications && unreadCount > 0) markNotificationsRead();
+                    }}
+                  >
+                    <Bell size={20} />
+                    {unreadCount > 0 && <span className="notification-badge">{unreadCount}</span>}
+                  </button>
+                  
+                  {/* Dropdown */}
+                  {showNotifications && (
+                    <div className="notification-dropdown glass-card">
+                      <h4 className="p-3 m-0" style={{borderBottom: '1px solid var(--border-color)', fontSize: '1rem', fontFamily: 'var(--font-display)'}}>Thông báo</h4>
+                      <div className="notification-list">
+                        {notifications?.length > 0 ? (
+                          notifications.map(n => (
+                            <div key={n.id} className="notification-item">
+                              <div className={`notif-dot ${n.type}`}></div>
+                              <div>
+                                <div style={{fontWeight: 600, fontSize: '0.9rem'}}>{n.title}</div>
+                                <div style={{fontSize: '0.8rem', color: 'var(--text-muted)'}}>{n.message}</div>
+                                <div style={{fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: '2px'}}>{n.time}</div>
+                              </div>
+                            </div>
+                          ))
+                        ) : (
+                          <div className="p-3 text-center text-muted" style={{fontSize: '0.9rem'}}>Chưa có thông báo nào</div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
               
               {user ? (
                 <>
