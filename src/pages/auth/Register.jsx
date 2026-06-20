@@ -58,7 +58,7 @@ const Register = () => {
       const result = login(formData.email, formData.password, false);
       setLoading(false);
       if (result.success) {
-        navigate('/');
+        navigate('/user');
       } else {
         setError(result.message);
       }
