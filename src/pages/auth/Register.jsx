@@ -18,9 +18,16 @@ const Register = () => {
   const [showConfirmPass, setShowConfirmPass] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Nếu đã đăng nhập, tự động chuyển về Dashboard
+  const { user, login } = useAuth();
+  useEffect(() => {
+    if (user) {
+      navigate(user.role === 'admin' ? '/admin' : '/user');
+    }
+  }, [user, navigate]);
 
   const fromBooking = location.state?.fromBooking || false;
 
