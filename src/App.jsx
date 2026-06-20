@@ -16,6 +16,7 @@ import POS from './pages/POS';
 
 // User Pages
 import Home from './pages/user/Home';
+import UserDashboard from './pages/user/UserDashboard';
 
 // Auth Pages
 import Login from './pages/auth/Login';
@@ -41,6 +42,11 @@ function App() {
           {/* Nhánh 1: Hệ thống cho User */}
           <Route path="/" element={<UserLayout />}>
             <Route index element={<Home />} />
+            <Route path="user" element={
+              <ProtectedRoute>
+                <UserDashboard />
+              </ProtectedRoute>
+            } />
           </Route>
 
           {/* Nhánh 2: Hệ thống cho Admin (Được bảo vệ) */}

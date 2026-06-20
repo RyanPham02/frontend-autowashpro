@@ -27,7 +27,7 @@ const Login = () => {
       setLoading(false);
       
       if (result.success) {
-        navigate(isAdminMode ? '/admin' : '/');
+        navigate(isAdminMode ? '/admin' : '/user');
       } else {
         setError(result.message);
       }

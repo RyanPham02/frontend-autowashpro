@@ -51,9 +51,9 @@ const UserLayout = () => {
               
               {user ? (
                 <>
-                  <div className="d-none d-md-flex align-items-center gap-2 text-muted">
+                  <Link to="/user" className="d-none d-md-flex align-items-center gap-2 text-muted" style={{textDecoration: 'none'}}>
                     <User size={18} /> {t('header.hello', { name: user.name })}
-                  </div>
+                  </Link>
                   <button onClick={logout} className="btn btn-secondary d-none d-md-flex align-items-center" style={{ padding: '0.5rem 1rem' }}>
                     <LogOut size={16} /> {t('header.logout')}
                   </button>
@@ -97,9 +97,9 @@ const UserLayout = () => {
               
               {user ? (
                 <>
-                  <div className="d-flex align-items-center gap-2 text-muted mb-2">
+                  <Link to="/user" className="d-flex align-items-center gap-2 text-muted mb-2" onClick={closeMobileMenu} style={{textDecoration: 'none'}}>
                     <User size={18} /> {t('header.hello', { name: user.name })}
-                  </div>
+                  </Link>
                   {user.role === 'admin' && (
                     <Link to="/admin" className="btn btn-primary w-100 justify-content-center" onClick={closeMobileMenu}>
                       {t('header.admin')}
