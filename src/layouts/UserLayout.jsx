@@ -3,7 +3,7 @@ import { Link, Outlet } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { useTranslation } from 'react-i18next';
-import { LogIn, LogOut, User, Sun, Moon, Globe, Zap, Menu, X } from 'lucide-react';
+import { LogIn, LogOut, User, Sun, Moon, Globe, Zap, Menu, X, MessageCircle, Send } from 'lucide-react';
 import './UserLayout.css';
 
 const UserLayout = () => {
@@ -11,6 +11,7 @@ const UserLayout = () => {
   const { theme, toggleTheme } = useTheme();
   const { t, i18n } = useTranslation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   const toggleLanguage = () => {
     const newLang = i18n.language === 'vi' ? 'en' : 'vi';
@@ -145,6 +146,39 @@ const UserLayout = () => {
           </div>
         </div>
       </footer>
+
+      {/* Floating Live Chat */}
+      <div className="floating-chat-container">
+        {isChatOpen && (
+          <div className="chat-window glass-card">
+            <div className="chat-header d-flex justify-content-between align-items-center">
+              <div className="d-flex align-items-center gap-2">
+                <div className="status-dot"></div>
+                <h4 className="m-0" style={{fontSize: '1rem'}}>Hỗ trợ 24/7</h4>
+              </div>
+              <button className="icon-btn" onClick={() => setIsChatOpen(false)}><X size={18} /></button>
+            </div>
+            <div className="chat-body">
+              <div className="chat-message bot">
+                Xin chào! AutoWash Pro có thể giúp gì cho bạn?
+              </div>
+            </div>
+            <div className="chat-footer d-flex gap-2">
+              <input type="text" className="form-input flex-fill" placeholder="Nhập tin nhắn..." style={{minHeight: '40px', padding: '0.5rem'}} />
+              <button className="btn btn-primary d-flex align-items-center justify-content-center" style={{padding: '0 1rem'}}>
+                <Send size={16} />
+              </button>
+            </div>
+          </div>
+        )}
+        <button 
+          className="chat-bubble btn btn-primary"
+          onClick={() => setIsChatOpen(!isChatOpen)}
+        >
+          {isChatOpen ? <X size={24} /> : <MessageCircle size={24} />}
+        </button>
+      </div>
+
     </div>
   );
 };

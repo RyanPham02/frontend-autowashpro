@@ -47,6 +47,8 @@ export const AuthProvider = ({ children }) => {
           role: 'user', 
           name: email.split('@')[0],
           balance: 0,
+          points: 2500, // Loyalty points
+          membership: null, // e.g., { plan: 'Premium', expiresAt: '2026-12-31' }
           vouchers: [
             { id: 'v1', code: 'WELCOME50', discount: 50000, description: 'Giảm 50K cho khách mới' },
             { id: 'v2', code: 'WASH20', discount: 20000, description: 'Giảm 20K dịch vụ rửa xe' }
@@ -120,10 +122,34 @@ export const AuthProvider = ({ children }) => {
     ));
   };
 
+  const rateBooking = (bookingId, rating, pointsAwarded) => {
+    setBookings(bookings.map(b => 
+      b.id === bookingId ? { ...b, rated: true, rating } : b
+    ));
+    if (user && user.role === 'user') {
+      const updatedUser = { ...user, points: (user.points || 0) + pointsAwarded };
+      updateUser(updatedUser);
+    }
+  };
+
+  const subscribeMembership = (planName, price) => {
+    if (user && user.role === 'user' && user.balance >= price) {
+      const updatedUser = { 
+        ...user, 
+        balance: user.balance - price,
+        membership: { plan: planName, expiresAt: '2026-12-31' }
+      };
+      updateUser(updatedUser);
+      return { success: true };
+    }
+    return { success: false, message: 'Số dư ví không đủ' };
+  };
+
   return (
     <AuthContext.Provider value={{ 
       user, login, logout, depositWallet, deductWallet, 
-      bookings, addBooking, updateBookingStep 
+      bookings, addBooking, updateBookingStep,
+      rateBooking, subscribeMembership
     }}>
       {children}
     </AuthContext.Provider>

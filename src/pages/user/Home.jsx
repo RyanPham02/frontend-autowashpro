@@ -236,6 +236,63 @@ const Home = () => {
             </AnimatePresence>
           </div>
         </section>
+
+        {/* Membership Section */}
+        <section className="membership-section w-100" style={{paddingTop: '4rem', paddingBottom: '4rem', maxWidth: '1100px', margin: '0 auto'}}>
+          <div className="text-center mb-5">
+            <h2 className="section-title justify-content-center m-0">
+              <Star style={{ color: "var(--amber)" }} /> Gói Đặc Quyền Hội Viên (AutoWash VIP)
+            </h2>
+            <p className="text-muted mt-2">Đăng ký một lần, rửa xe không giới hạn cả tháng. Tiết kiệm tối đa!</p>
+          </div>
+
+          <div className="row justify-content-center">
+            {/* Package 1 */}
+            <div className="col-md-5 mb-4">
+              <div className="glass-card h-100 d-flex flex-column" style={{border: '1px solid var(--border-color)', position: 'relative', overflow: 'hidden'}}>
+                <div style={{padding: '2rem'}}>
+                  <h3 style={{fontSize: '1.5rem', fontFamily: 'var(--font-display)', color: 'var(--text-main)'}}>Gói Cơ Bản (Standard)</h3>
+                  <div className="my-3">
+                    <span style={{fontSize: '2.5rem', fontWeight: 'bold', color: 'var(--primary-hover)'}}>500.000đ</span>
+                    <span className="text-muted"> /tháng</span>
+                  </div>
+                  <ul className="list-unstyled mb-4 text-muted" style={{display: 'flex', flexDirection: 'column', gap: '0.8rem'}}>
+                    <li className="d-flex align-items-center gap-2"><CheckCircle size={18} style={{color: 'var(--emerald)'}}/> Rửa xe cơ bản 5 lần/tháng</li>
+                    <li className="d-flex align-items-center gap-2"><CheckCircle size={18} style={{color: 'var(--emerald)'}}/> Hút bụi nội thất miễn phí</li>
+                    <li className="d-flex align-items-center gap-2"><CheckCircle size={18} style={{color: 'var(--emerald)'}}/> Giảm 10% các dịch vụ khác</li>
+                  </ul>
+                  <button className="btn btn-secondary w-100 mt-auto" style={{padding: '0.8rem'}} onClick={() => {
+                    alert("Tính năng mua gói đang được tích hợp!");
+                  }}>Đăng ký ngay</button>
+                </div>
+              </div>
+            </div>
+
+            {/* Package 2 */}
+            <div className="col-md-5 mb-4">
+              <div className="glass-card h-100 d-flex flex-column" style={{border: '2px solid var(--amber)', position: 'relative', overflow: 'hidden', background: 'linear-gradient(145deg, rgba(245, 158, 11, 0.05) 0%, rgba(0,0,0,0.4) 100%)'}}>
+                <div style={{position: 'absolute', top: '15px', right: '-35px', background: 'var(--amber)', color: '#000', padding: '5px 40px', transform: 'rotate(45deg)', fontWeight: 'bold', fontSize: '0.8rem'}}>
+                  BÁN CHẠY
+                </div>
+                <div style={{padding: '2rem'}}>
+                  <h3 style={{fontSize: '1.5rem', fontFamily: 'var(--font-display)', color: 'var(--amber)'}}>Gói Vô Cực (Unlimited)</h3>
+                  <div className="my-3">
+                    <span style={{fontSize: '2.5rem', fontWeight: 'bold', color: 'var(--amber)'}}>1.000.000đ</span>
+                    <span className="text-muted"> /tháng</span>
+                  </div>
+                  <ul className="list-unstyled mb-4 text-muted" style={{display: 'flex', flexDirection: 'column', gap: '0.8rem'}}>
+                    <li className="d-flex align-items-center gap-2"><CheckCircle size={18} style={{color: 'var(--amber)'}}/> Rửa xe không giới hạn số lần</li>
+                    <li className="d-flex align-items-center gap-2"><CheckCircle size={18} style={{color: 'var(--amber)'}}/> Dọn nội thất cao cấp 1 lần/tuần</li>
+                    <li className="d-flex align-items-center gap-2"><CheckCircle size={18} style={{color: 'var(--amber)'}}/> Xếp hàng ưu tiên (Priority Lane)</li>
+                  </ul>
+                  <button className="btn w-100 mt-auto" style={{padding: '0.8rem', background: 'var(--amber)', color: '#000', fontWeight: 'bold'}} onClick={() => {
+                    alert("Tính năng mua gói đang được tích hợp!");
+                  }}>Đăng ký ngay</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
 
       {/* Modal Details */}

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
-import { Calendar, Clock, MapPin, Award, History, Car, Plus, Trash2, Wallet, Tag, CheckCircle, CreditCard, X, ChevronRight } from 'lucide-react';
+import { Calendar, Clock, MapPin, Award, History, Car, Plus, Trash2, Wallet, Tag, CheckCircle, CreditCard, X, ChevronRight, Video, Star } from 'lucide-react';
 import './UserDashboard.css';
 
 const UserDashboard = () => {
@@ -10,6 +10,13 @@ const UserDashboard = () => {
   const [showDepositModal, setShowDepositModal] = useState(false);
   const [depositAmount, setDepositAmount] = useState(500000);
   const [depositSuccess, setDepositSuccess] = useState(false);
+
+  // Feature states
+  const [showCameraModal, setShowCameraModal] = useState(false);
+  const [showRatingModal, setShowRatingModal] = useState(null); // stores booking ID
+  const [ratingVal, setRatingVal] = useState(0);
+
+  const { rateBooking } = useAuth();
 
   // Mock data garage
   const [garage, setGarage] = useState([
@@ -61,6 +68,12 @@ const UserDashboard = () => {
     );
   };
 
+  const handleRate = () => {
+    rateBooking(showRatingModal, ratingVal, 50); // 50 points rewarded
+    setRatingVal(0);
+    setShowRatingModal(null);
+  };
+
   return (
     <div className="user-dashboard-container pt-5 pb-5">
       <div className="container" style={{ marginTop: '80px' }}>
@@ -109,14 +122,16 @@ const UserDashboard = () => {
                   <div className="member-tier-box p-3 rounded" style={{background: 'rgba(245, 158, 11, 0.1)', border: '1px solid rgba(245, 158, 11, 0.2)'}}>
                     <div className="d-flex justify-content-between align-items-center mb-2">
                       <span style={{color: '#f59e0b', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
-                        <Award size={18} /> Hạng Vàng
+                        <Award size={18} /> {user?.membership ? 'Hội Viên VIP' : 'Hạng Vàng'}
                       </span>
-                      <strong>2.500 Điểm</strong>
+                      <strong>{(user?.points || 2500).toLocaleString('vi-VN')} Điểm</strong>
                     </div>
                     <div style={{height: '6px', background: 'var(--border-color)', borderRadius: '3px', overflow: 'hidden'}}>
                       <div style={{width: '75%', height: '100%', background: '#f59e0b'}}></div>
                     </div>
-                    <p className="text-muted mt-2 mb-0" style={{fontSize: '0.875rem'}}>Còn 500 điểm nữa để lên Hạng Bạch Kim</p>
+                    <p className="text-muted mt-2 mb-0" style={{fontSize: '0.875rem'}}>
+                      {user?.membership ? `Gói Hội Viên: ${user.membership.plan}` : 'Còn 500 điểm nữa để lên Hạng Bạch Kim'}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -192,6 +207,25 @@ const UserDashboard = () => {
                     
                     {/* Stepper Tracking */}
                     {renderStepper(booking.trackingStep || 1)}
+                    
+                    {/* Action Buttons based on status */}
+                    <div className="mt-4 pt-3 d-flex justify-content-end gap-2" style={{borderTop: '1px dashed var(--border-color)'}}>
+                      {booking.trackingStep === 2 && (
+                        <button className="btn btn-primary d-flex align-items-center gap-2" style={{fontSize: '0.85rem', padding: '0.4rem 0.8rem', background: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6', border: '1px solid #3b82f6'}} onClick={() => setShowCameraModal(true)}>
+                          <Video size={16}/> Xem Live Camera
+                        </button>
+                      )}
+                      {booking.trackingStep === 4 && !booking.rated && (
+                        <button className="btn btn-primary d-flex align-items-center gap-2" style={{fontSize: '0.85rem', padding: '0.4rem 0.8rem', background: 'rgba(245, 158, 11, 0.1)', color: '#f59e0b', border: '1px solid #f59e0b'}} onClick={() => setShowRatingModal(booking.id)}>
+                          <Star size={16}/> Đánh giá dịch vụ (+50 điểm)
+                        </button>
+                      )}
+                      {booking.rated && (
+                        <div className="d-flex align-items-center gap-1 text-muted" style={{fontSize: '0.85rem'}}>
+                          Đã đánh giá: {booking.rating} <Star size={14} fill="var(--amber)" color="var(--amber)"/>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 ))}
                 {myBookings.length === 0 && (
@@ -325,6 +359,63 @@ const UserDashboard = () => {
                 </>
               )}
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* CAMERA MODAL */}
+      {showCameraModal && (
+        <div className="modal-overlay" onClick={() => setShowCameraModal(false)}>
+          <div className="modal-content glass-card" onClick={e => e.stopPropagation()} style={{maxWidth: '700px', width: '100%'}}>
+            <div className="modal-header pb-3" style={{borderBottom: '1px solid var(--border-color)'}}>
+              <h3 className="m-0 d-flex align-items-center gap-2" style={{fontFamily: 'var(--font-display)'}}><Video size={20} color="#3b82f6"/> Live Camera (Bay 2)</h3>
+              <button className="icon-btn" onClick={() => setShowCameraModal(false)}><X size={20} /></button>
+            </div>
+            <div className="modal-body p-0 mt-3 position-relative" style={{background: '#000', borderRadius: '12px', overflow: 'hidden', aspectRatio: '16/9'}}>
+              {/* Fake camera feed using a CSS gradient animation or static image */}
+              <div className="w-100 h-100 d-flex align-items-center justify-content-center flex-column" style={{background: 'linear-gradient(45deg, #111, #222)'}}>
+                <Video size={48} color="rgba(255,255,255,0.1)" />
+                <div style={{position: 'absolute', top: 10, right: 10, background: 'rgba(239, 68, 68, 0.8)', color: '#fff', padding: '2px 8px', borderRadius: '4px', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '4px'}}>
+                  <div style={{width: 8, height: 8, borderRadius: '50%', background: '#fff', animation: 'ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite'}}></div>
+                  LIVE
+                </div>
+                <div style={{position: 'absolute', bottom: 10, left: 10, color: 'rgba(255,255,255,0.5)', fontFamily: 'monospace'}}>CAM_BAY_02 - {new Date().toLocaleTimeString()}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* RATING MODAL */}
+      {showRatingModal && (
+        <div className="modal-overlay" onClick={() => setShowRatingModal(null)}>
+          <div className="modal-content glass-card text-center" onClick={e => e.stopPropagation()} style={{maxWidth: '400px'}}>
+            <h3 style={{fontFamily: 'var(--font-display)'}}>Đánh giá dịch vụ</h3>
+            <p className="text-muted">Bạn có hài lòng với dịch vụ vừa rồi không? Nhận ngay 50 điểm thưởng!</p>
+            
+            <div className="d-flex justify-content-center gap-2 my-4">
+              {[1,2,3,4,5].map(star => (
+                <Star 
+                  key={star} 
+                  size={40} 
+                  style={{cursor: 'pointer', transition: 'all 0.2s'}}
+                  fill={star <= ratingVal ? 'var(--amber)' : 'transparent'}
+                  color={star <= ratingVal ? 'var(--amber)' : 'var(--text-muted)'}
+                  onClick={() => setRatingVal(star)}
+                />
+              ))}
+            </div>
+
+            <textarea className="form-input mb-4" placeholder="Chia sẻ cảm nhận của bạn (không bắt buộc)..." rows="3"></textarea>
+            
+            <button 
+              className="btn w-100" 
+              style={{background: ratingVal > 0 ? 'var(--amber)' : 'var(--surface-2)', color: ratingVal > 0 ? '#000' : 'var(--text-muted)', fontWeight: 'bold'}}
+              disabled={ratingVal === 0}
+              onClick={handleRate}
+            >
+              Gửi Đánh Giá
+            </button>
           </div>
         </div>
       )}
