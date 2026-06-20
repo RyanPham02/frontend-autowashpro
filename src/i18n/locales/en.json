@@ -1,0 +1,229 @@
+{
+  "header": {
+    "home": "Home",
+    "services": "Services",
+    "about": "About Us",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "admin": "Admin Panel",
+    "hello": "Hello, {{name}}",
+    "changeLang": "Switch Language",
+    "changeTheme": "Toggle Light/Dark Mode"
+  },
+  "home": {
+    "badge": "International Standard Service",
+    "title": "Care for your car with",
+    "titleHighlight": "cutting-edge technology",
+    "description": "Experience the most professional car wash and detailing service. Our technicians are highly trained and equipped with modern machinery.",
+    "bookNow": "Book Now",
+    "explore": "Explore Services",
+    "stats": {
+      "customers": "Satisfied Customers",
+      "rating": "Google Rating"
+    },
+    "features": {
+      "f1_title": "Fast & Convenient",
+      "f1_desc": "Optimized process saves 30% of your waiting time.",
+      "f2_title": "Premium Solutions",
+      "f2_desc": "Using 100% imported chemicals safe for paint and health.",
+      "f3_title": "Service Warranty",
+      "f3_desc": "100% refund if you are not satisfied with the cleaning quality."
+    },
+    "servicesTitle": "Featured Services",
+    "service": {
+      "ready": "Ready",
+      "uses": "BOOKINGS",
+      "rating": "RATING",
+      "vehicle": "TYPE",
+      "time": "TIME",
+      "minutes": "mins",
+      "only": "Only",
+      "currency": "VND"
+    },
+    "booking": {
+      "badge": "Quick Booking",
+      "title": "No need to wait long",
+      "desc": "With just a few simple steps, your car will be arranged with a specialized technician at your requested time slot.",
+      "step1_title": "Choose Service",
+      "step1_desc": "Select a car wash or detailing package based on your needs.",
+      "step2_title": "Choose Time",
+      "step2_desc": "Book an appointment at a time that fits your schedule.",
+      "step3_title": "Arrive & Experience",
+      "step3_desc": "Bring your car on time and get it back shining clean.",
+      "successTitle": "Booking Successful!",
+      "successDesc": "We have received your request. Our staff will contact you shortly to confirm.",
+      "formTitle": "Booking Information",
+      "name": "Full Name",
+      "namePh": "Enter your name",
+      "phone": "Phone Number",
+      "phonePh": "Enter your phone number",
+      "vehicleInfo": "Vehicle Model / Plate",
+      "vehiclePh": "Ex: Mazda 3 - 30A 123.45",
+      "serviceReq": "Desired Service",
+      "date": "Date",
+      "timeInput": "Time",
+      "submit": "Confirm Booking"
+    }
+  },
+  "services": {
+    "1": {
+      "name": "Basic Wash & Undercarriage",
+      "desc": "Snow foam wash, undercarriage spray, light vacuuming"
+    },
+    "2": {
+      "name": "Premium Detailing Wash",
+      "desc": "Exterior detailing, interior cleaning, plastic restoration"
+    },
+    "3": {
+      "name": "Ceramic Coating",
+      "desc": "Ceramic coating protecting car paint for 12 months"
+    },
+    "4": {
+      "name": "Deep Interior Cleaning",
+      "desc": "Seat washing, ceiling cleaning, ozone odor removal"
+    },
+    "5": {
+      "name": "Polishing & Scratch Removal",
+      "desc": "Swirl removal, 3-step polishing for paint restoration"
+    },
+    "6": {
+      "name": "Undercarriage Anti-rust",
+      "desc": "Rubberized undercoating for anti-rust and noise reduction"
+    }
+  },
+  "admin": {
+    "dashboard": "Dashboard",
+    "bookings": "Bookings",
+    "services": "Services",
+    "customers": "Customers",
+    "pos": "POS / Checkout",
+    "settings": "Settings"
+  },
+  "footer": {
+    "brandDesc": "Leading professional car care and detailing system.",
+    "contact": "Contact",
+    "addressTitle": "Address:",
+    "addressValue": "123 ABC Street, District 1, HCMC",
+    "rights": "All rights reserved."
+  },
+  "auth": {
+    "loginTitle": "Welcome Back",
+    "loginDesc": "Please log in to manage your appointments",
+    "adminLoginTitle": "Admin Login",
+    "adminLoginDesc": "Use the special Secret Key to enter the system",
+    "customer": "Customer",
+    "admin": "Admin",
+    "emailLabel": "Email Address",
+    "emailPh": "name@example.com",
+    "passLabel": "Password",
+    "passPh": "Enter your password",
+    "adminPassLabel": "Secret Key",
+    "adminPassPh": "Enter Secret Key (e.g., admin123)",
+    "remember": "Remember me",
+    "forgot": "Forgot password?",
+    "loginBtn": "Log In",
+    "noAccount": "Don't have an account?",
+    "registerNow": "Register Now",
+    "registerTitle": "Create an Account",
+    "registerDesc": "Create an account to receive offers and manage appointments easier",
+    "registerFromBookingTitle": "Booking Confirmed!",
+    "registerFromBookingDesc": "Create a password to track your car's service progress.",
+    "nameLabel": "Full Name",
+    "namePh": "John Doe",
+    "phoneLabel": "Phone Number",
+    "phonePh": "0912...",
+    "passLengthPh": "Minimum 6 characters",
+    "confirmPassLabel": "Confirm Password",
+    "confirmPassPh": "Re-enter password",
+    "agreeTerms": "I agree to the",
+    "terms": "Terms of Service",
+    "registerBtn": "Create Account",
+    "hasAccount": "Already have an account?",
+    "loginNow": "Log In",
+    "overlayTitle": "AutoWash Pro System",
+    "overlayDesc": "Experience top-tier car care service with modern technology and closed processes.",
+    "overlayRegTitle": "Member Benefits",
+    "overlayReg1": "10% off for the first wash",
+    "overlayReg2": "Earn points for gifts",
+    "overlayReg3": "Manage car care history"
+  },
+  "adminDict": {
+    "role": "Administrator",
+    "logout": "Logout",
+    "topbar": {
+      "search": "Search customers, plates...",
+      "lang": "Switch Language",
+      "theme": "Toggle Light/Dark",
+      "noti": "Notifications",
+      "newBooking": "+ New Booking"
+    },
+    "dash": {
+      "subtitle": "Today's business overview",
+      "revenue": "Today's Revenue",
+      "vsYesterday": "vs yesterday",
+      "washes": "Cars Washed",
+      "target": "Target: 30 cars",
+      "newCustomers": "New Customers",
+      "today": "Today",
+      "upcomingBookings": "Upcoming Bookings",
+      "viewAll": "View All"
+    },
+    "table": {
+      "customer": "Customer",
+      "plate": "Plate",
+      "service": "Service",
+      "time": "Time",
+      "status": "Status",
+      "action": "Action",
+      "bookingId": "Booking ID",
+      "vehiclePlate": "Vehicle & Plate",
+      "contact": "Contact",
+      "tier": "Tier",
+      "vehicles": "Vehicles",
+      "totalSpent": "Total Spent",
+      "lastVisit": "Last Visit"
+    },
+    "action": {
+      "detail": "Detail",
+      "addCustomer": "Add Customer",
+      "addService": "Add Service",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "bookings": {
+      "title": "Booking Management",
+      "subtitle": "View and manage car wash bookings",
+      "search": "Search by plate, customer name...",
+      "allStatus": "All Statuses",
+      "pending": "Pending",
+      "inProgress": "In Progress",
+      "completed": "Completed",
+      "today": "Today",
+      "thisWeek": "This Week",
+      "thisMonth": "This Month",
+      "notFound": "No bookings found"
+    },
+    "customers": {
+      "title": "Customer Management",
+      "subtitle": "Customer data and service history",
+      "search": "Search name, phone, plate...",
+      "allTiers": "All Tiers",
+      "notFound": "No customers found"
+    },
+    "services": {
+      "title": "Service Management",
+      "subtitle": "List of car wash and detailing packages",
+      "minutes": "mins"
+    },
+    "pos": {
+      "search": "Search services...",
+      "newOrder": "New Order",
+      "platePlaceholder": "License Plate (Ex: 30A-123.45)",
+      "subtotal": "Subtotal",
+      "discount": "Discount",
+      "total": "Total",
+      "pay": "Pay Now"
+    }
+  }
+}

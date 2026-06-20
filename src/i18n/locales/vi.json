@@ -1,0 +1,229 @@
+{
+  "header": {
+    "home": "Trang chủ",
+    "services": "Dịch vụ",
+    "about": "Về chúng tôi",
+    "login": "Đăng nhập",
+    "register": "Đăng ký",
+    "logout": "Đăng xuất",
+    "admin": "Vào Admin",
+    "hello": "Xin chào, {{name}}",
+    "changeLang": "Đổi ngôn ngữ",
+    "changeTheme": "Đổi giao diện Sáng/Tối"
+  },
+  "home": {
+    "badge": "Dịch vụ tiêu chuẩn quốc tế",
+    "title": "Chăm sóc xế yêu của bạn với",
+    "titleHighlight": "công nghệ đỉnh cao",
+    "description": "Trải nghiệm dịch vụ rửa xe và detailing chuyên nghiệp nhất. Đội ngũ kỹ thuật viên được đào tạo bài bản, kết hợp máy móc hiện đại.",
+    "bookNow": "Đặt lịch ngay",
+    "explore": "Khám phá dịch vụ",
+    "stats": {
+      "customers": "Khách hàng hài lòng",
+      "rating": "Đánh giá trên Google"
+    },
+    "features": {
+      "f1_title": "Nhanh chóng & Tiện lợi",
+      "f1_desc": "Quy trình tối ưu giúp tiết kiệm 30% thời gian chờ đợi của bạn.",
+      "f2_title": "Dung dịch cao cấp",
+      "f2_desc": "Sử dụng 100% hóa chất nhập khẩu an toàn cho sơn và sức khỏe.",
+      "f3_title": "Bảo hành dịch vụ",
+      "f3_desc": "Hoàn tiền 100% nếu bạn không hài lòng với chất lượng làm sạch."
+    },
+    "servicesTitle": "Dịch vụ nổi bật",
+    "service": {
+      "ready": "Sẵn sàng",
+      "uses": "LƯỢT DÙNG",
+      "rating": "ĐÁNH GIÁ",
+      "vehicle": "XE",
+      "time": "TGIAN",
+      "minutes": "phút",
+      "only": "Chỉ",
+      "currency": "đ"
+    },
+    "booking": {
+      "badge": "Đặt lịch nhanh",
+      "title": "Không cần phải chờ đợi lâu",
+      "desc": "Chỉ với vài thao tác đơn giản, xe của bạn sẽ được sắp xếp kỹ thuật viên chăm sóc chuyên biệt vào đúng khung giờ bạn yêu cầu.",
+      "step1_title": "Chọn dịch vụ",
+      "step1_desc": "Lựa chọn gói rửa xe hoặc chăm sóc theo nhu cầu.",
+      "step2_title": "Chọn thời gian",
+      "step2_desc": "Đặt lịch vào khung giờ phù hợp với lịch trình của bạn.",
+      "step3_title": "Đến và trải nghiệm",
+      "step3_desc": "Đưa xe đến đúng giờ và nhận lại xe sạch bong sáng bóng.",
+      "successTitle": "Đặt lịch thành công!",
+      "successDesc": "Chúng tôi đã nhận được yêu cầu của bạn. Nhân viên sẽ liên hệ lại trong thời gian sớm nhất để xác nhận.",
+      "formTitle": "Thông tin đặt lịch",
+      "name": "Họ và tên",
+      "namePh": "Nhập tên của bạn",
+      "phone": "Số điện thoại",
+      "phonePh": "Nhập số điện thoại",
+      "vehicleInfo": "Dòng xe / Biển số",
+      "vehiclePh": "VD: Mazda 3 - 30A 123.45",
+      "serviceReq": "Dịch vụ mong muốn",
+      "date": "Ngày",
+      "timeInput": "Giờ",
+      "submit": "Xác nhận đặt lịch"
+    }
+  },
+  "services": {
+    "1": {
+      "name": "Rửa ngoài, xịt gầm",
+      "desc": "Rửa bọt tuyết cơ bản, xịt gầm, hút bụi nhẹ"
+    },
+    "2": {
+      "name": "Rửa xe chi tiết (Premium)",
+      "desc": "Rửa chi tiết ngoại thất, dọn nội thất, dưỡng nhựa"
+    },
+    "3": {
+      "name": "Phủ Ceramic",
+      "desc": "Phủ bóng Ceramic bảo vệ sơn xe 12 tháng"
+    },
+    "4": {
+      "name": "Dọn nội thất chuyên sâu",
+      "desc": "Giặt ghế, làm sạch trần, khử mùi ozon"
+    },
+    "5": {
+      "name": "Đánh bóng, xóa xước",
+      "desc": "Xóa xước dăm, đánh bóng 3 bước phục hồi sơn"
+    },
+    "6": {
+      "name": "Phủ gầm chống rỉ",
+      "desc": "Phủ gầm cao su non chống rỉ sét, giảm ồn"
+    }
+  },
+  "admin": {
+    "dashboard": "Dashboard",
+    "bookings": "Lịch hẹn",
+    "services": "Dịch vụ",
+    "customers": "Khách hàng",
+    "pos": "POS / Thu ngân",
+    "settings": "Cài đặt"
+  },
+  "footer": {
+    "brandDesc": "Hệ thống chăm sóc và làm đẹp xe chuyên nghiệp hàng đầu.",
+    "contact": "Liên hệ",
+    "addressTitle": "Địa chỉ:",
+    "addressValue": "123 Đường ABC, Quận 1, TP.HCM",
+    "rights": "All rights reserved."
+  },
+  "auth": {
+    "loginTitle": "Chào mừng trở lại",
+    "loginDesc": "Vui lòng đăng nhập để quản lý lịch hẹn của bạn",
+    "adminLoginTitle": "Đăng nhập Quản trị",
+    "adminLoginDesc": "Sử dụng Mật khẩu đặc biệt để vào hệ thống",
+    "customer": "Khách hàng",
+    "admin": "Quản trị viên",
+    "emailLabel": "Email đăng nhập",
+    "emailPh": "name@example.com",
+    "passLabel": "Mật khẩu",
+    "passPh": "Nhập mật khẩu",
+    "adminPassLabel": "Mật khẩu Bí mật (Secret Key)",
+    "adminPassPh": "Nhập Secret Key (VD: admin123)",
+    "remember": "Ghi nhớ đăng nhập",
+    "forgot": "Quên mật khẩu?",
+    "loginBtn": "Đăng nhập",
+    "noAccount": "Chưa có tài khoản?",
+    "registerNow": "Đăng ký ngay",
+    "registerTitle": "Đăng ký tài khoản",
+    "registerDesc": "Tạo tài khoản để nhận ưu đãi và quản lý lịch hẹn dễ dàng hơn",
+    "registerFromBookingTitle": "Lịch hẹn đã được ghi nhận!",
+    "registerFromBookingDesc": "Tạo ngay Mật khẩu để quản lý và theo dõi tiến độ chiếc xe của bạn.",
+    "nameLabel": "Họ và tên",
+    "namePh": "Nguyễn Văn A",
+    "phoneLabel": "Số điện thoại",
+    "phonePh": "0912...",
+    "passLengthPh": "Tối thiểu 6 ký tự",
+    "confirmPassLabel": "Xác nhận mật khẩu",
+    "confirmPassPh": "Nhập lại mật khẩu",
+    "agreeTerms": "Tôi đồng ý với các",
+    "terms": "Điều khoản dịch vụ",
+    "registerBtn": "Tạo tài khoản",
+    "hasAccount": "Đã có tài khoản?",
+    "loginNow": "Đăng nhập",
+    "overlayTitle": "Hệ thống AutoWash Pro",
+    "overlayDesc": "Trải nghiệm dịch vụ chăm sóc xe hàng đầu với công nghệ hiện đại và quy trình khép kín.",
+    "overlayRegTitle": "Ưu đãi dành cho thành viên",
+    "overlayReg1": "Giảm 10% cho lần rửa đầu tiên",
+    "overlayReg2": "Tích điểm đổi quà tặng",
+    "overlayReg3": "Quản lý lịch sử chăm sóc xe"
+  },
+  "adminDict": {
+    "role": "Quản trị viên",
+    "logout": "Đăng xuất",
+    "topbar": {
+      "search": "Tìm kiếm khách hàng, biển số xe...",
+      "lang": "Đổi ngôn ngữ",
+      "theme": "Giao diện Sáng/Tối",
+      "noti": "Thông báo",
+      "newBooking": "+ Đặt lịch mới"
+    },
+    "dash": {
+      "subtitle": "Tổng quan hoạt động kinh doanh hôm nay",
+      "revenue": "Doanh thu hôm nay",
+      "vsYesterday": "so với hôm qua",
+      "washes": "Số xe đã rửa",
+      "target": "Mục tiêu: 30 xe",
+      "newCustomers": "Khách hàng mới",
+      "today": "Trong ngày hôm nay",
+      "upcomingBookings": "Lịch hẹn sắp tới",
+      "viewAll": "Xem tất cả"
+    },
+    "table": {
+      "customer": "Khách hàng",
+      "plate": "Biển số",
+      "service": "Dịch vụ",
+      "time": "Thời gian",
+      "status": "Trạng thái",
+      "action": "Thao tác",
+      "bookingId": "Mã Đặt",
+      "vehiclePlate": "Xe & Biển số",
+      "contact": "Liên hệ",
+      "tier": "Hạng thẻ",
+      "vehicles": "Xe sở hữu",
+      "totalSpent": "Tổng chi tiêu",
+      "lastVisit": "Lần cuối đến"
+    },
+    "action": {
+      "detail": "Chi tiết",
+      "addCustomer": "Thêm khách hàng",
+      "addService": "Thêm dịch vụ",
+      "edit": "Sửa",
+      "delete": "Xóa"
+    },
+    "bookings": {
+      "title": "Quản lý Lịch hẹn",
+      "subtitle": "Xem và quản lý các lịch hẹn rửa xe",
+      "search": "Tìm kiếm theo biển số, tên khách hàng...",
+      "allStatus": "Tất cả trạng thái",
+      "pending": "Chờ xử lý",
+      "inProgress": "Đang rửa",
+      "completed": "Hoàn thành",
+      "today": "Hôm nay",
+      "thisWeek": "Tuần này",
+      "thisMonth": "Tháng này",
+      "notFound": "Không tìm thấy lịch hẹn nào"
+    },
+    "customers": {
+      "title": "Quản lý Khách hàng",
+      "subtitle": "Dữ liệu khách hàng và lịch sử dịch vụ",
+      "search": "Tìm tên, số điện thoại, biển số...",
+      "allTiers": "Tất cả hạng",
+      "notFound": "Không tìm thấy khách hàng nào"
+    },
+    "services": {
+      "title": "Quản lý Dịch vụ",
+      "subtitle": "Danh sách các gói rửa xe và chăm sóc xe",
+      "minutes": "phút"
+    },
+    "pos": {
+      "search": "Tìm gói dịch vụ...",
+      "newOrder": "Đơn hàng mới",
+      "platePlaceholder": "Biển số xe (VD: 30A-123.45)",
+      "subtotal": "Tạm tính",
+      "discount": "Giảm giá",
+      "total": "Tổng cộng",
+      "pay": "Thanh toán"
+    }
+  }
+}
